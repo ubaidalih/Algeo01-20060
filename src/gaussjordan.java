@@ -5,6 +5,14 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class MyClass {
+
+    static void swap_row(double mat[][], int col, int i, int j){
+        for (int k = 0; k < col; k++){
+            double temp = mat[i][k];
+            mat[i][k] = mat[j][k];
+            mat[j][k] = temp;
+        }
+    }	
 	
 	static void gaussJordan(double mat[][], int row, int col){
 		
@@ -17,12 +25,36 @@ public class MyClass {
 				break;
 			}
 			
-			// Ngecek depannya udah 1 belom
-//			if (mat[i][idxCol] == 1) {
-//				idxCol++;
-//				continue;
-//			}
-			
+			// Ngecek depannya udah bukan 0
+			boolean cek;
+			while (true) {
+				if (mat[i][idxCol] == 0) {
+					cek = false;
+					for (int j = i + 1; j < row; j++) {
+						if (mat[j][idxCol] != 0) {
+							swap_row(mat, col, i, j);
+							cek = true;
+							break;
+						}
+					}
+					if (cek) {
+						break;
+					} else {
+						idxCol++;
+					}
+				} else {
+					break;
+				}
+				if (idxCol == col - 1) {
+					break;
+				}
+			}
+
+			// Ngecek udah sampe kolom terakhir belom
+			if (idxCol == col - 1) {
+				break;
+			}			
+
 			// Ngebagi depannya biar jadi 1
 			double pembagi = (double)mat[i][idxCol];
 			for (int j = idxCol; j < col; j++) {
@@ -45,7 +77,7 @@ public class MyClass {
 			idxCol++;
 		}
 		
-		//System.out.println(Arrays.deepToString(mat));
+		System.out.println(Arrays.deepToString(mat));
 		
 		// proses backtracking
 		
@@ -66,6 +98,11 @@ public class MyClass {
 				}
 			}
 			
+			// Berarti ga ada 1 di col itu
+			if (idxSatu == -1) {
+				continue;
+			}
+			
 			// Kurangin elemen non 0 terbelakang biar jadi 0
 			double pengali;
 			for (int j = idxSatu - 1; j > -1; j--) {
@@ -73,8 +110,9 @@ public class MyClass {
 					continue;
 				}
 				pengali = (double)mat[j][i] / (double)mat[idxSatu][i];
-				mat[j][i] = mat[j][i] - pengali * mat[idxSatu][i];
-				mat[j][col-1] = mat[j][col-1] - pengali * mat[idxSatu][col-1];
+				for (int k = i; k < col; k++) {
+					mat[j][k] = mat[j][k] - pengali * mat[idxSatu][k];
+				}
 			}
 		}
 	}
@@ -99,3 +137,4 @@ public class MyClass {
 		System.out.println(Arrays.deepToString(matriks));
 	}
 }
+
