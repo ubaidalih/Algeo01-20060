@@ -3,6 +3,64 @@
 
 import java.util.*;
 class determinan{
+	static void matriksInvers (double mat[][], double tmp[][], int n) {
+		
+		double det = determinanKofaktor(mat,n);
+		
+		matriksKofaktor(mat, tmp, n);
+		
+		matriksTranspose(tmp, n);
+		
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				tmp[i][j] = (1/det) * tmp[i][j];
+			}
+		}
+		
+	}
+	
+	static void matriksTranspose(double mat[][], int n) {
+		double[][] tmp = new double[n][n];
+		
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				tmp[i][j] = mat[j][i];
+			}
+		}
+		
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				mat[i][j] = tmp[i][j];
+			}
+		}
+	}
+	
+	static void matriksKofaktor(double mat[][], double tmp[][], int n) {
+		double[][] temp = new double[n-1][n-1];
+		
+		for (int matRow = 0; matRow < n; matRow++) {
+			int sign = -1;
+			if ( (matRow % 2) == 0 ) {
+				sign = 1;
+			}
+			for (int matCol = 0; matCol < n; matCol++) {
+				int i = 0, j = 0;
+	            for (int row = 0; row < n; row++){
+	                for (int col = 0; col < n; col++){
+	                    if (row != matRow && col != matCol){
+	                        temp[i][j++] = mat[row][col];
+	                        if (j == n - 1){
+	                            j = 0;
+	                            i++;
+	                        }
+	                    }
+	                }
+	            }
+	            tmp[matRow][matCol] += sign * determinanKofaktor(temp, n-1);
+	            sign = -sign;
+			}
+		}
+	}
     static double determinanKofaktor(double mat[][], int n){
         double det = 0;
 
