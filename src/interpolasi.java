@@ -1,12 +1,7 @@
-//cuma iseng-iseng buat, algoritma garis besarnya udah benar tapi belum berbentuk library
-//format input output masih sangat berantakan dan belom ngikutin panduan
-//persamaan parameter blom dibuat
-//presisi masih ada masalah, kayaknya masalah di pembagian sementara ngakalinnya kayak line 37
-
 import java.util.*;
-class Gauss{
- 
-    static void gauss(double mat[][], int row, int col){
+
+class interpolasi{
+    static void gauss(double mat[][], double ans[], int row, int col){
         int sol = -1;
         for (int k = 0; k < row; k++){
             
@@ -23,14 +18,13 @@ class Gauss{
                 sol = k;
             }
             if (i_max != k){
-                swap_row(mat,col,k,i_max);
+                swap_row(mat,col+1,k,i_max);
             }
             
             
             for(int j=k; j<=col; j++){
                 mat[k][j] /= v_max;
             }
-            print(mat, 3, 3);
         
  
             for (int i = k + 1; i < row; i++){
@@ -42,7 +36,7 @@ class Gauss{
             }
         }
         
- 
+        
         if (sol != -1){
             if (mat[sol][col] != 0){
                 System.out.print("Sistem persamaan tidak memiliki solusi.");
@@ -52,57 +46,66 @@ class Gauss{
             }
             return;
         }
+        
  
-        double x[]= new double[col];
         for (int i = row - 1; i >= 0; i--){
-            x[i] = mat[i][col];
+            ans[i] = mat[i][col];
             for (int j = i + 1; j < row; j++){
-                x[i] -= mat[i][j] * x[j];
+                ans[i] -= mat[i][j] * ans[j];
             }
-            x[i] = x[i] / mat[i][i];
+            ans[i] = ans[i] / mat[i][i];
         }
       
         System.out.println();
         System.out.println("Solusi sistem persamaan : ");
         for (int i = 0; i < col; i++){
-            System.out.format("%.6f", x[i]);
+            System.out.format("%.6f", ans[i]);
             System.out.println();
         }
+        
     }
- 
+	
+	// fungsi buat nuker baris
     static void swap_row(double mat[][], int col, int i, int j){
-        for (int k = 0; k <= col; k++){
+        for (int k = 0; k < col; k++){
             double temp = mat[i][k];
             mat[i][k] = mat[j][k];
             mat[j][k] = temp;
         }
-    }
- 
-    static void print(double mat[][], int row, int col){
-        for (int i = 0; i < row; i++, System.out.println()){
-            for (int j = 0; j <= col; j++){
-                System.out.print(mat[i][j]);
-                System.out.print(" ");
+    }	
+    static void interpolasi(double mat[][], int n){
+        double[][] polinom = new double[n+2][n+2];
+        for(int i=0; i<=n; i++){
+            polinom[i][0] = 1;
+            for(int j=1; j<=n; j++){
+                polinom[i][j] = Math.pow(mat[i][0], j);
             }
-            System.out.println();
-        }       
-    }
-
-    static void read(double mat[][]){
-        Scanner in = new Scanner(System.in);
-        int row = in.nextInt();
-        int col = in.nextInt();
-        for(int i=0; i<row; i++){
-            for(int j=0; j<=col; j++){
-                mat[i][j] = in.nextInt();
+            polinom[i][n+1] = mat[i][1];
+        }
+        double ans[]= new double[n+1];
+        gauss(polinom,ans, n+1, n+1);
+        System.out.println("Persamaan Interpolasi : ");
+        System.out.print("f(x) = ");
+        for (int i = 0; i < n+1; i++){
+            System.out.format("%.6f", ans[i]);
+            if(i == 0){
+                System.out.print(" + ");
+            }
+            else if(i == 1){
+                System.out.print("x" + " + ");
+            }
+            else if(i == n){
+                System.out.print("x^" + i);
+            }
+            else{
+                System.out.print("x^" + i +" + ");
             }
         }
-    }
 
-    public static void main(String[] args){
-        double[][] mat = { {1, 2, 3, 4}, {4, 5, 6, 7}, {7, 8, 6, 1} };
-        gauss(mat,3, 3);
     }
- 
-  //Buat driver sendiri kalo mau ngetes
+    public static void main(String[] args){
+        double[][] mat = { {0.1, 0.003}, {0.3, 0.067}, {0.5, 0.148} };
+        double[] ans = new double[4];
+        interpolasi(mat, 2);
+    }
 }
