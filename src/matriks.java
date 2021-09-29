@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.*;
 
 class matriks{
     static void gauss(double mat[][], double ans[], int row, int col){
@@ -409,7 +410,7 @@ class matriks{
         return det;
     }
     
-	static void interpolasi(double mat[][], int n){
+	static void interpolasi(double mat[][],double ans[], int n){
         double[][] polinom = new double[n+2][n+2];
         for(int i=0; i<=n; i++){
             polinom[i][0] = 1;
@@ -418,8 +419,10 @@ class matriks{
             }
             polinom[i][n+1] = mat[i][1];
         }
-        double ans[]= new double[n+1];
+        
         gauss(polinom,ans, n+1, n+1);
+    }
+    static void displayInterpolasi(double ans[], int n){
         System.out.println("Persamaan Interpolasi : ");
         System.out.print("f(x) = ");
         for (int i = 0; i < n+1; i++){
@@ -431,16 +434,30 @@ class matriks{
                 System.out.print("x" + " + ");
             }
             else if(i == n){
-                System.out.print("x^" + i);
+                System.out.println("x^" + i);
             }
             else{
                 System.out.print("x^" + i +" + ");
             }
         }
 
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Masukkan banyak nilai yang akan ditaksir : ");
+        int tc = scanner.nextInt();
+        for(int i=0; i<tc; i++){
+            System.out.print("Masukkan nilai yang akan ditaksir : ");
+            double x = scanner.nextDouble();
+            System.out.print("f("+x+") = ");
+            double taksiran = 0;
+            for(int j=0; j<n+1; j++){
+                taksiran += ans[j]*Math.pow(x, j); 
+            }
+            System.out.format("%.6f", taksiran);
+            System.out.println();
+        }
     }
 
-	static void regresi(double mat[][], int n, int k){
+	static void regresi(double mat[][], double ans[], int n, int k){
         double temp[][] = new double[k+1][k+2];
         //compute augmented baris pertama
         temp[0][0] = n;
@@ -463,9 +480,11 @@ class matriks{
                 }
             }
         }
-        double ans[] = new double[k+1];
+        
         gauss(temp,ans, k+1, k+1);
+    }
 
+    static void displayRegresi(double ans[], int k){
         System.out.println("Model regresi : ");
         System.out.print("y = ");
         for (int i = 0; i < k+1; i++){
@@ -474,11 +493,69 @@ class matriks{
                 System.out.print(" + ");
             }
             else if(i == k){
-                System.out.print("x_" + i);
+                System.out.println("x_" + i);
             }
             else{
                 System.out.print("x_" + i +" + ");
             }
+        }
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Masukkan banyak nilai yang akan ditaksir : ");
+        int tc = scanner.nextInt();
+        for(int i=0; i<tc; i++){
+            System.out.print("Masukkan nilai x_i yang akan ditaksir : ");
+            double taksiran = ans[0];
+            for(int j=1; j<=k; j++){
+                double x = scanner.nextDouble();
+                taksiran += x*ans[j];
+            }
+            System.out.print("y = ");
+            System.out.format("%.6f", taksiran);
+            System.out.println();
+        }
+    }
+
+    static void saveFileRegresi(double ans[], int k){
+        try {
+            FileWriter writer = new FileWriter("regresi.txt");
+            writer.write("Model regresi : \n");
+            writer.write("y = ");
+            for (int i = 0; i < k+1; i++){
+                String s = String.format("%.6f", ans[i]);
+                writer.write(s);
+                if(i == 0){
+                    writer.write(" + ");
+                }
+                else if(i == k){
+                    writer.write("x_" + i +"\n");
+                }
+                else{
+                    writer.write("x_" + i +" + ");
+                }
+            }
+
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Masukkan banyak nilai yang akan ditaksir : ");
+            int tc = scanner.nextInt();
+            for(int i=0; i<tc; i++){
+                System.out.print("Masukkan nilai x_i yang akan ditaksir : ");
+                double taksiran = ans[0];
+                for(int j=1; j<=k; j++){
+                    double x = scanner.nextDouble();
+                    taksiran += x*ans[j];
+                }
+                writer.write("y = ");
+                String s = String.format("%.6f", taksiran);
+                writer.write(s);
+                writer.write("\n");
+            }
+            writer.close();
+            System.out.println("File berhasil disimpan.");
+        } 
+        catch (IOException e) {
+            System.out.println("Gagal menyimpan ke dalam file.");
+            e.printStackTrace();
         }
     }
 

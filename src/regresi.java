@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.*;
 
 class regresi{
     static void gauss(double mat[][], double ans[], int row, int col){
@@ -73,7 +74,7 @@ class regresi{
         }
     }
 
-    static void regresi(double mat[][], int n, int k){
+    static void regresi(double mat[][], double ans[], int n, int k){
         double temp[][] = new double[k+1][k+2];
         //compute augmented baris pertama
         temp[0][0] = n;
@@ -96,9 +97,11 @@ class regresi{
                 }
             }
         }
-        double ans[] = new double[k+1];
+        
         gauss(temp,ans, k+1, k+1);
+    }
 
+    static void displayRegresi(double ans[], int k){
         System.out.println("Model regresi : ");
         System.out.print("y = ");
         for (int i = 0; i < k+1; i++){
@@ -107,16 +110,75 @@ class regresi{
                 System.out.print(" + ");
             }
             else if(i == k){
-                System.out.print("x_" + i);
+                System.out.println("x_" + i);
             }
             else{
                 System.out.print("x_" + i +" + ");
             }
         }
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Masukkan banyak nilai yang akan ditaksir : ");
+        int tc = scanner.nextInt();
+        for(int i=0; i<tc; i++){
+            System.out.print("Masukkan nilai x_i yang akan ditaksir : ");
+            double taksiran = ans[0];
+            for(int j=1; j<=k; j++){
+                double x = scanner.nextDouble();
+                taksiran += x*ans[j];
+            }
+            System.out.print("y = ");
+            System.out.format("%.6f", taksiran);
+            System.out.println();
+        }
     }
 
+    static void saveFileRegresi(double ans[], int k){
+        try {
+            FileWriter writer = new FileWriter("regresi.txt");
+            writer.write("Model regresi : \n");
+            writer.write("y = ");
+            for (int i = 0; i < k+1; i++){
+                String s = String.format("%.6f", ans[i]);
+                writer.write(s);
+                if(i == 0){
+                    writer.write(" + ");
+                }
+                else if(i == k){
+                    writer.write("x_" + i +"\n");
+                }
+                else{
+                    writer.write("x_" + i +" + ");
+                }
+            }
+
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Masukkan banyak nilai yang akan ditaksir : ");
+            int tc = scanner.nextInt();
+            for(int i=0; i<tc; i++){
+                System.out.print("Masukkan nilai x_i yang akan ditaksir : ");
+                double taksiran = ans[0];
+                for(int j=1; j<=k; j++){
+                    double x = scanner.nextDouble();
+                    taksiran += x*ans[j];
+                }
+                writer.write("y = ");
+                String s = String.format("%.6f", taksiran);
+                writer.write(s);
+                writer.write("\n");
+            }
+            writer.close();
+            System.out.println("File berhasil disimpan.");
+        } 
+        catch (IOException e) {
+            System.out.println("Gagal menyimpan ke dalam file.");
+            e.printStackTrace();
+        }
+    }
     public static void main(String[] args){
         double[][] mat = { {72.4, 76.3,0.9}, {41.6, 70.3, 0.91}, {34.3, 77.1, 0.96}, {35.1, 68.0, 0.89} };
-        regresi(mat, 4, 2);
+        double ans[] = new double[3]; //double[k+1]
+        regresi(mat,ans, 4, 2);
+        saveFileRegresi(ans, 2);
     }
 }
