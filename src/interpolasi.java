@@ -2,67 +2,75 @@ import java.util.*;
 
 class interpolasi{
     static void gauss(double mat[][], double ans[], int row, int col){
-        int sol = -1;
-        for (int k = 0; k < row; k++){
-            
-            int i_max = k;
-            double v_max = mat[i_max][k];
- 
-            for (int i = k + 1; i < row; i++){
-                if (Math.abs(mat[i][k]) > v_max){
-                    v_max = mat[i][k];
-                    i_max = i;
+        for(int j = 0; j < col; j++) {
+            int now = 0;   
+            while (j<row && j+now<col && mat[j][j+now] != 1) {
+                if (mat[j][j+now] != 0 && mat[j][j+now] != 1) {
+                    double f = mat[j][j+now];
+                    for (int k=0; k<= col; k++) {
+                        mat[j][k] /= f;
+                    }
+                    break;
+                }
+                else if (mat[j][j] == 0) {
+                    now++;
                 }
             }
-            if (mat[k][i_max] == 0){
-                sol = k;
-            }
-            if (i_max != k){
-                swap_row(mat,col+1,k,i_max);
-            }
-            
-            
-            for(int j=k; j<=col; j++){
-                mat[k][j] /= v_max;
-            }
-        
- 
-            for (int i = k + 1; i < row; i++){
-                double f = mat[i][k]/mat[k][k];
-                for (int j = k + 1; j <= col; j++){
-                    mat[i][j] -= mat[k][j] * f;
+            for(int i = j+1; i < row; i++) {
+                if (mat[i][j+now] != 0.0) {
+                    double f = mat[i][j+now];
+                    for (int k = 0; k <= col; k++) {
+                        mat[i][k] = mat[i][k] - f/(mat[j][j+now])*mat[j][k];
+                    }
                 }
-                mat[i][k] = 0;
             }
         }
-        
-        
-        if (sol != -1){
-            if (mat[sol][col] != 0){
-                System.out.print("Sistem persamaan tidak memiliki solusi.");
+        //print(mat,row,col);
+
+        boolean solvable = true;
+        int barisnol = 0;
+        for(int i = row-1; i>=0; i--){
+            int j = 0;
+            while(j<=col && mat[i][j]==0){
+                j++;
+            }
+            if(j ==  col){
+                solvable = false;
+            }
+            else if(j == col+1){
+                barisnol++;
             }
             else{
-                System.out.print("Sistem persamaan memiliki tak hingga solusi. (Belum buat solusi parametrik)");
+                break;
             }
-            return;
         }
-        
- 
-        for (int i = row - 1; i >= 0; i--){
-            ans[i] = mat[i][col];
-            for (int j = i + 1; j < row; j++){
-                ans[i] -= mat[i][j] * ans[j];
+
+        if(solvable){
+            if(row - barisnol == col){
+                int newrow = row - barisnol;
+                for (int i = newrow - 1; i >= 0; i--){
+                    ans[i] = mat[i][col];
+                    for (int j = i + 1; j < newrow; j++){
+                        ans[i] -= mat[i][j] * ans[j];
+                    }
+                    ans[i] = ans[i] / mat[i][i];
+                }
+                
+                System.out.println();
+                System.out.println("Solusi sistem persamaan : ");
+                for (int i = 0; i < col; i++){
+                    System.out.format("%.6f", ans[i]);
+                    System.out.println();
+                }
             }
-            ans[i] = ans[i] / mat[i][i];
+            else{
+                System.out.println("Sistem persamaan memiliki solusi parametrik.");
+                //solusi parametriknya belom buat.
+            }
         }
-      
-        System.out.println();
-        System.out.println("Solusi sistem persamaan : ");
-        for (int i = 0; i < col; i++){
-            System.out.format("%.6f", ans[i]);
-            System.out.println();
+        else{
+            System.out.println("Sistem persamaan tidak memiliki solusi.");
         }
-        
     }
 	
 	// fungsi buat nuker baris
