@@ -5,6 +5,15 @@
 
 import java.util.*;
 class Gauss{
+
+    static void inputAugmented(double mat[][], int row, int col){
+        Scanner scanner = new Scanner(System.in);
+        for(int i=0; i<row; i++){
+            for(int j=0; j<=col; j++){
+                mat[i][j] = scanner.nextDouble();
+            }
+        }
+    }
  
     static void gauss(double mat[][], double ans[], int row, int col){
         for(int j = 0; j < col; j++) {
@@ -108,11 +117,17 @@ class Gauss{
     }
 
     public static void main(String[] args){
-        double[][] mat = { {1, -1, 0, 0, 1, 3}, {1, 1, 0, -3, 0, 6}, {2, -1, 0, 1, -1, 5}, {-1, 2, 0, -2, -1, -1} };
-        double[][] mat2 = { {2,0,8,0,8}, {0,1,0,4,6}, {-4,0,6,0,6}, {0,-2,0,3,-1}, {2,0,-4,0,-4}, {0,1,0,-2,0} };
+        //double[][] mat = { {1, -1, 0, 0, 1, 3}, {1, 1, 0, -3, 0, 6}, {2, -1, 0, 1, -1, 5}, {-1, 2, 0, -2, -1, -1} };
+        //double[][] mat2 = { {2,0,8,0,8}, {0,1,0,4,6}, {-4,0,6,0,6}, {0,-2,0,3,-1}, {2,0,-4,0,-4}, {0,1,0,-2,0} };
+        Scanner scanner = new Scanner(System.in);
+        int row, col;
+        row = scanner.nextInt();
+        col = scanner.nextInt();
+        double mat[][] = new double[row][col+1];
+        inputAugmented(mat, row, col);
         double ans[]= new double[4];
-        gauss(mat2,ans,6,4);
-        print(mat2,6,4);
+        gauss(mat,ans,4,5);
+        print(mat,4,5);
     }
  
   //Buat driver sendiri kalo mau ngetes
