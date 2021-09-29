@@ -139,65 +139,36 @@ class Invers{
             }
         }
 
-        
-        double[][] hasilinvers = new double[n][n];
+        double cekdet = determinanKofaktor(dikali, n);
 
-        matriksInvers(dikali, hasilinvers, n);
+        if (cekdet == 0){
+            System.out.println("Matrik Tidak Memiliki Invers");
+        }else{
+            double[][] hasilinvers = new double[n][n];
 
-        double[] finol = new double[n];
-        for(int i = 0; i < n; i++){
-            finol[i] = 0;
-        }
-
-        for(int i = 0; i < n; i++){
-            for(int j = 0; j < n; j++){
-                finol[i] = finol[i] + (hasilinvers[i][j] * pengali[j]);
+            matriksInvers(dikali, hasilinvers, n);
+            double[] finol = new double[n];
+            for(int i = 0; i < n; i++){
+                finol[i] = 0;
             }
-        }
-        for (int i = 0; i < finol.length; i++) { //this equals to the row in our matrix.
-            System.out.print(finol[i] + " ");
-            }
-    }
 
-    static void cramer(double mat[][], int n){
-        double[][] utama = new double[n][n];
-        for(int i = 0; i < n; i++){
-            for(int j = 0; j < n; j++){
-                utama[i][j] = mat[i][j];
-            }
-        }
-        double dMain = determinanKofaktor(utama, n);
-        double[] ans = new double[n];
-        // mencari dx dy dz
-        for (int i = 0; i < mat.length; i++){
-            double temp[][] = new double[n][mat[0].length];
-            for(int y = 0; y < n; y++){
-                for(int u = 0; u < mat[0].length; u++){
-                    temp[y][u] = mat[y][u];
+            for(int i = 0; i < n; i++){
+                for(int j = 0; j < n; j++){
+                    finol[i] = finol[i] + (hasilinvers[i][j] * pengali[j]);
                 }
             }
-            swap_col(temp, n, i, temp[0].length - 1);
-            // for (int p = 0; p < temp.length; p++) { //this equals to the row in our matrix.
-            //     for (int l = 0; l < temp[p].length; l++) { //this equals to the column in each row.
-            //        System.out.print(temp[p][l] + " ");
-            //     }
-            //     System.out.println(); //change line on console as row comes to end in the matrix.
-            // }
-            double[][] tinggalItung = removeLastCol(temp);
-            double detKomponen = determinanKofaktor(tinggalItung, n);
-            ans[i] = detKomponen / dMain;
-            
+            for (int i = 0; i < finol.length; i++) { //this equals to the row in our matrix.
+                System.out.print(finol[i] + " ");
+                }
         }
-        for (int i = 0; i < ans.length; i++) { //this equals to the row in our matrix.
-            System.out.print(ans[i] + " ");
-            }
     }
+
 
     public static void main(String[] args){
         // double[][] mat = { {2.0, 1.0, -1.0, 1.0}, {3.0, 2.0, 2.0, 13.0}, {4.0, -2.0, 3.0, 9.0} };
         double[][] mat = { {2.0, 1.0, -3.0, -9.0}, {1.0, 0, 5.0, 14.0}, {-3.0, 2.0, -1.0, 4.0 }};
         // double[][] mat = { {2.0, 1.0, -3.0}, {1.0, 0, 5.0}, {-3.0, 2.0, -1.0 }};
-        double[][] ans = new double[3][3];
+        // double[][] ans = new double[3][3];
         invers(mat, 3);
         // matriksInvers(mat, ans , 3);
         // for (int i = 0; i < ans.length; i++) { //this equals to the row in our matrix.

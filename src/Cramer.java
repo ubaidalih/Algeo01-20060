@@ -111,29 +111,33 @@ class Cramer{
             }
         }
         double dMain = determinanKofaktor(utama, n);
+        if (dMain == 0){
+            System.out.println("Matrix Tidak Punya Invers");
+        } else{
         double[] ans = new double[n];
-        // mencari dx dy dz
-        for (int i = 0; i < mat.length; i++){
-            double temp[][] = new double[n][mat[0].length];
-            for(int y = 0; y < n; y++){
-                for(int u = 0; u < mat[0].length; u++){
-                    temp[y][u] = mat[y][u];
+            // mencari dx dy dz
+            for (int i = 0; i < mat.length; i++){
+                double temp[][] = new double[n][mat[0].length];
+                for(int y = 0; y < n; y++){
+                    for(int u = 0; u < mat[0].length; u++){
+                        temp[y][u] = mat[y][u];
+                    }
                 }
+                swap_col(temp, n, i, temp[0].length - 1);
+                // for (int p = 0; p < temp.length; p++) { //this equals to the row in our matrix.
+                //     for (int l = 0; l < temp[p].length; l++) { //this equals to the column in each row.
+                //        System.out.print(temp[p][l] + " ");
+                //     }
+                //     System.out.println(); //change line on console as row comes to end in the matrix.
+                // }
+                double[][] tinggalItung = removeLastCol(temp);
+                double detKomponen = determinanKofaktor(tinggalItung, n);
+                ans[i] = detKomponen / dMain;
+                
             }
-            swap_col(temp, n, i, temp[0].length - 1);
-            // for (int p = 0; p < temp.length; p++) { //this equals to the row in our matrix.
-            //     for (int l = 0; l < temp[p].length; l++) { //this equals to the column in each row.
-            //        System.out.print(temp[p][l] + " ");
-            //     }
-            //     System.out.println(); //change line on console as row comes to end in the matrix.
-            // }
-            double[][] tinggalItung = removeLastCol(temp);
-            double detKomponen = determinanKofaktor(tinggalItung, n);
-            ans[i] = detKomponen / dMain;
-            
-        }
-        for (int i = 0; i < ans.length; i++) { //this equals to the row in our matrix.
-            System.out.print(ans[i] + " ");
+            for (int i = 0; i < ans.length; i++) { //this equals to the row in our matrix.
+                System.out.print(ans[i] + " ");
+                }
             }
     }
 
