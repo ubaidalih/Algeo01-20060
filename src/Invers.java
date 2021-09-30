@@ -126,7 +126,7 @@ class Invers{
         return det;
     }
 
-    static void invers(double mat[][], int n){
+    static void invers(double mat[][],double finol[],boolean solvable, int n){
         double[] pengali = new double[n];
         for(int i = 0; i < n; i++){
             pengali[i] = mat[i][(mat[0].length) - 1];
@@ -142,12 +142,11 @@ class Invers{
         double cekdet = determinanKofaktor(dikali, n);
 
         if (cekdet == 0){
-            System.out.println("Matrik Tidak Memiliki Invers");
+            solvable = false;
         }else{
             double[][] hasilinvers = new double[n][n];
 
             matriksInvers(dikali, hasilinvers, n);
-            double[] finol = new double[n];
             for(int i = 0; i < n; i++){
                 finol[i] = 0;
             }
@@ -157,9 +156,6 @@ class Invers{
                     finol[i] = finol[i] + (hasilinvers[i][j] * pengali[j]);
                 }
             }
-            for (int i = 0; i < finol.length; i++) { //this equals to the row in our matrix.
-                System.out.print(finol[i] + " ");
-                }
         }
     }
 
@@ -169,7 +165,9 @@ class Invers{
         double[][] mat = { {2.0, 1.0, -3.0, -9.0}, {1.0, 0, 5.0, 14.0}, {-3.0, 2.0, -1.0, 4.0 }};
         // double[][] mat = { {2.0, 1.0, -3.0}, {1.0, 0, 5.0}, {-3.0, 2.0, -1.0 }};
         // double[][] ans = new double[3][3];
-        invers(mat, 3);
+        double ans[] = new double[3];
+        boolean solvable = true;
+        invers(mat,ans,solvable, 3);
         // matriksInvers(mat, ans , 3);
         // for (int i = 0; i < ans.length; i++) { //this equals to the row in our matrix.
         //     for (int j = 0; j < ans[i].length; j++) { //this equals to the column in each row.

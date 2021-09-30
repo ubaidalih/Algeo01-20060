@@ -103,7 +103,7 @@ class Cramer{
         return det;
     }
 
-    static void cramer(double mat[][], int n){
+    static void cramer(double mat[][],double ans[],boolean solvable, int n){
         double[][] utama = new double[n][n];
         for(int i = 0; i < n; i++){
             for(int j = 0; j < n; j++){
@@ -112,9 +112,9 @@ class Cramer{
         }
         double dMain = determinanKofaktor(utama, n);
         if (dMain == 0){
-            System.out.println("Matrix Tidak Punya Invers");
+            solvable = false;
         } else{
-        double[] ans = new double[n];
+        
             // mencari dx dy dz
             for (int i = 0; i < mat.length; i++){
                 double temp[][] = new double[n][mat[0].length];
@@ -135,15 +135,14 @@ class Cramer{
                 ans[i] = detKomponen / dMain;
                 
             }
-            for (int i = 0; i < ans.length; i++) { //this equals to the row in our matrix.
-                System.out.print(ans[i] + " ");
-                }
-            }
+        }
     }
 
     public static void main(String[] args){
         double[][] mat = { {2.0, 1.0, -1.0, 1.0}, {3.0, 2.0, 2.0, 13.0}, {4.0, -2.0, 3.0, 9.0} };
-        cramer(mat, 3);
+        double[] ans = new double[3];
+        boolean solvable = true;
+        cramer(mat,ans,solvable, 3);
         // for (int i = 0; i < matrix.length; i++) { //this equals to the row in our matrix.
         //     for (int j = 0; j < matrix[i].length; j++) { //this equals to the column in each row.
         //        System.out.print(matrix[i][j] + " ");

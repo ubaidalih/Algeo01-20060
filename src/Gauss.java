@@ -85,7 +85,7 @@ class Gauss{
             }
         }
     }
-    static void displayGauss(double ans[],boolean solvable, int col){
+    static void displaySPL(double ans[],boolean solvable, int col){
         if(solvable){
             System.out.println("Solusi sistem persamaan : ");
             for (int i = 0; i < col; i++){
@@ -99,7 +99,7 @@ class Gauss{
         }
     }
 
-    static void saveFileGauss(double ans[], boolean solvable, int col){
+    static void saveFileSPL(double ans[], boolean solvable, int col){
         if(solvable){
             try{
                 FileWriter writer = new FileWriter("splgauss.txt");

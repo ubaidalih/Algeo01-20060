@@ -71,7 +71,7 @@ class matriks{
         }
     }
 
-    static void displayGauss(double ans[],boolean solvable, int col){
+    static void displaySPL(double ans[],boolean solvable, int col){
         if(solvable){
             System.out.println("Solusi sistem persamaan : ");
             for (int i = 0; i < col; i++){
@@ -85,7 +85,7 @@ class matriks{
         }
     }
 
-    static void saveFileGauss(double ans[], boolean solvable, int col){
+    static void saveFileSPL(double ans[], boolean solvable, int col){
         if(solvable){
             try{
                 FileWriter writer = new FileWriter("splgauss.txt");
@@ -138,6 +138,33 @@ class matriks{
             mat[j][k] = temp;
         }
     }	
+
+    static void swap_col(double mat[][], int row, int i, int j){
+        for (int k = 0; k < row; k++){
+            double temp = mat[k][i];
+            mat[k][i] = mat[k][j];
+            mat[k][j] = temp;
+        }
+    }
+
+    static double[][] removeLastCol(double mat[][])
+    {
+        int row = mat.length;
+        int col = mat[0].length;
+    
+        double [][] newArray = new double[row][col-1]; //new Array will have one column less
+    
+    
+        for(int i = 0; i < row; i++)
+        {
+            for(int j = 0; j < (col - 1); j++)
+            {
+                newArray[i][j] = mat[i][j];
+            }
+        }
+    
+        return newArray;
+    }
 	
 	static void gaussJordan(double mat[][], int row, int col){
 		
@@ -309,6 +336,75 @@ class matriks{
 		
 		System.out.println(Arrays.deepToString(ans));
 	}
+
+    static void invers(double mat[][],double finol[],boolean solvable, int n){
+        double[] pengali = new double[n];
+        for(int i = 0; i < n; i++){
+            pengali[i] = mat[i][(mat[0].length) - 1];
+        }
+
+        double[][] dikali = new double[n][n];
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                dikali[i][j] = mat[i][j];
+            }
+        }
+
+        double cekdet = determinanKofaktor(dikali, n);
+
+        if (cekdet == 0){
+            solvable = false;
+        }else{
+            double[][] hasilinvers = new double[n][n];
+
+            matriksInvers(dikali, hasilinvers, n);
+            for(int i = 0; i < n; i++){
+                finol[i] = 0;
+            }
+
+            for(int i = 0; i < n; i++){
+                for(int j = 0; j < n; j++){
+                    finol[i] = finol[i] + (hasilinvers[i][j] * pengali[j]);
+                }
+            }
+        }
+    }
+
+    static void cramer(double mat[][],double ans[],boolean solvable, int n){
+        double[][] utama = new double[n][n];
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                utama[i][j] = mat[i][j];
+            }
+        }
+        double dMain = determinanKofaktor(utama, n);
+        if (dMain == 0){
+            solvable = false;
+        } else{
+        
+            // mencari dx dy dz
+            for (int i = 0; i < mat.length; i++){
+                double temp[][] = new double[n][mat[0].length];
+                for(int y = 0; y < n; y++){
+                    for(int u = 0; u < mat[0].length; u++){
+                        temp[y][u] = mat[y][u];
+                    }
+                }
+                swap_col(temp, n, i, temp[0].length - 1);
+                // for (int p = 0; p < temp.length; p++) { //this equals to the row in our matrix.
+                //     for (int l = 0; l < temp[p].length; l++) { //this equals to the column in each row.
+                //        System.out.print(temp[p][l] + " ");
+                //     }
+                //     System.out.println(); //change line on console as row comes to end in the matrix.
+                // }
+                double[][] tinggalItung = removeLastCol(temp);
+                double detKomponen = determinanKofaktor(tinggalItung, n);
+                ans[i] = detKomponen / dMain;
+                
+            }
+        }
+    }
+
     static void matriksInvers (double mat[][], double ans[][], int n) {
 		
 		double det = determinanKofaktor(mat,n);
