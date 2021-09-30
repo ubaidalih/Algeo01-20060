@@ -88,7 +88,7 @@ class matriks{
     static void saveFileSPL(double ans[], boolean solvable, int col){
         if(solvable){
             try{
-                FileWriter writer = new FileWriter("splgauss.txt");
+                FileWriter writer = new FileWriter("spl.txt");
                 writer.write("Solusi sistem persamaan : \n");
                 for (int i = 0; i < col; i++){
                     writer.write("x_"+ (i+1) + " = ");
@@ -356,8 +356,8 @@ class matriks{
             solvable = false;
         }else{
             double[][] hasilinvers = new double[n][n];
-
-            matriksInvers(dikali, hasilinvers, n);
+            boolean x = true;
+            matriksInvers(dikali, hasilinvers,x, n);
             for(int i = 0; i < n; i++){
                 finol[i] = 0;
             }
@@ -405,9 +405,56 @@ class matriks{
         }
     }
 
-    static void matriksInvers (double mat[][], double ans[][], int n) {
+    static void displayInvers(double ans[][], boolean solvable, int n){
+        if(solvable){
+            System.out.println("Matriks invers : ");
+            for(int i=0; i<n; i++){
+                for(int j=0; j<n; j++){
+                    System.out.format("%.6f", ans[i][j]);
+                    System.out.print(" ");
+                }
+                System.out.println();
+            }
+        }
+        else{
+            System.out.println("Matriks tidak memiliki invers.");
+        }
+    }
+
+    static void saveFileInvers(double ans[][], boolean solvable, int n){
+        try{
+            FileWriter writer = new FileWriter("invers.txt");
+            if(solvable){
+                writer.write("Matriks invers : ");
+                for(int i=0; i<n; i++){
+                    for(int j=0; j<n; j++){
+                        String s = String.format("%.6f", ans[i][j]);
+                        writer.write(s);
+                        writer.write(" ");
+                    }
+                    writer.write("\n");
+                }
+            }
+            else{
+                writer.write("Matriks tidak memiliki invers.");
+            }
+            writer.close();
+            System.out.println("File berhasil disimpan.");
+        }
+        catch (IOException e) {
+            System.out.println("Gagal menyimpan ke dalam file.");
+            e.printStackTrace();
+        }
+
+    }
+
+    static void matriksInvers (double mat[][], double ans[][],boolean solvable, int n) {
 		
 		double det = determinanKofaktor(mat,n);
+        if(det == 0.0){
+            solvable = false;
+            return;
+        }
 		
 		matriksKofaktor(mat, ans, n);
 		
@@ -420,6 +467,8 @@ class matriks{
 		}
 		
 	}
+
+    
 
 	static void matriksInversJordan(double mat[][], double ans[][], int n){
 		double[][] tmp = new double[n][2*n];
