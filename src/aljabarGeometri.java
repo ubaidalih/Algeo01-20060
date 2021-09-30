@@ -202,30 +202,71 @@ public class aljabarGeometri {
     }
 
     static double determinanOBE(double mat[][], int n){
-        int cnt = 0;
-        for (int k = 0; k < n; k++){
-            int i_max = k;
-            int v_max = (int)mat[i_max][k];
- 
-            for (int i = k + 1; i < n; i++){
-                if (Math.abs(mat[i][k]) > v_max){
-                    v_max = (int)mat[i][k];
-                    i_max = i;
-                }
-            }
-            if (i_max != k){
-                swap_row(mat,n,k,i_max);
-                cnt++;
-            }
-        
-            for (int i = k + 1; i < n; i++){
-                double f = mat[i][k]/mat[k][k];
-                for (int j = k + 1; j < n; j++){
-                    mat[i][j] -= mat[k][j] * f;
-                }
-                mat[i][k] = 0;
-            }
-        }
+       int cnt = 0;
+       double mult = 1;
+       // Proses gauss biasa
+		int idxCol = 0; // Sekarang lagi mau ngebuat angak 1 di kolom ke berapa 
+		for (int i = 0; i < n; i++) {
+			
+			// Ngecek udah sampe kolom terakhir belom
+			if (idxCol == n - 1) {
+				break;
+			}
+			
+			// Ngecek apakah depannya udah bukan 0
+			boolean cek;
+			while (true) {
+				if (mat[i][idxCol] == 0) {
+					cek = false;
+					for (int j = i + 1; j < n; j++) { // cari sampe ketemu yang bukan nol di kolom
+						if (mat[j][idxCol] != 0) {
+							swap_row(mat, n, i, j);
+							cnt++;
+							cek = true;
+							break;
+						}
+					}
+					if (cek) {
+						break;
+					} else { // di idxCol ga ada angka selain 0, pindah kolom lain
+						idxCol++;
+					}
+				} else { // depannya ga 0
+					break;
+				}
+				// ngecek apakah idxCol dah pindah sampe ujung, utk ngebreak while
+				if (idxCol == n - 1) {
+					break;
+				}
+			}
+
+			// Ngecek udah sampe kolom terakhir belom, ini utk ngebreak for ny
+			if (idxCol == n - 1) {
+				break;
+			}			
+
+			// Ngebagi depannya biar jadi 1
+			double pembagi = (double)mat[i][idxCol];
+			mult *= pembagi;
+			for (int j = idxCol; j < n; j++) {
+				mat[i][j] = mat[i][j] / pembagi;
+			}
+			
+			// Ngurangin paling depan biar jadi 0
+			double pengali;
+			for (int j = i + 1; j < n; j++) {
+				
+				if (mat[j][idxCol] == 0) {
+					continue;
+				}
+				
+				pengali = (double)mat[j][idxCol] / (double)mat[i][idxCol];
+				for (int k = idxCol; k < n; k++) {
+					mat[j][k] = mat[j][k] - pengali * mat[i][k];
+				}
+			}
+			idxCol++;
+		}
         double det;
         if(cnt%2 == 0) det = 1;
         else det = -1;
@@ -233,7 +274,7 @@ public class aljabarGeometri {
         for(int i=0; i<n; i++){
             det *= mat[i][i];
         }            
-        return det;
+        return det*mult;
     }
 	
 	/* METODE INVERS */
