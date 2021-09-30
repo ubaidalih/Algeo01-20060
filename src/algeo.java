@@ -531,8 +531,7 @@ public class algeo {
         }       
     }
     
-    public static double[][] readMatriks(int row, int col){
-        double mat[][] = new double[row][col];
+    public static void readMatriks(double mat[][],int row, int col){
         Scanner in = new Scanner(System.in);
         for(int i=0; i < row; i++){
             for(int j=0; j < col; j++){
@@ -540,7 +539,6 @@ public class algeo {
             }
         }
         in.close();
-        return mat;
     }
 
     public static double[][] inputFile(String fileName)throws Exception{        

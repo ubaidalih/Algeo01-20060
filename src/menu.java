@@ -41,7 +41,12 @@ public class menu {
 						row = scanner.nextInt();
 						col = scanner.nextInt();
 						double mat[][] = new double[row][col];
-						mat = algeo.readMatriks(row,col);
+						//algeo.readMatriks(mat,row,col);
+						for(int i=0; i<row; i++){
+							for(int j=0; j<col; j++){
+								mat[i][j] = scanner.nextDouble();
+							}
+						}
 						algeo.gauss(mat, row, col);
 						boolean solvable = true;
 						String temp[] = new String[col-1];
@@ -58,23 +63,31 @@ public class menu {
 							algeo.displaySPL(ans,solvable, col-1);
 						}
 						else if(menuOutput == 2){
-							//algeo.saveFileSPL(ans,solvable, col-1);
+							algeo.saveFileSPL(ans,solvable, col-1);
 						}
 					}
 					else if(menuInput == 2){
-						
-					}
-					//ALGORITMA
-					System.out.println("OUTPUT");
-					System.out.println("1. Output melalui screen");
-					System.out.println("2. Output melalui file");
-					System.out.print("Masukkan metode pilihan : ");
-					menuInput = scanner.nextInt();
-					if(menuInput == 1){
+						/*double mat[][] = algeo.inputFile("1a.txt");
+						int row = mat.length;
+						int col = mat[0].length;
+						algeo.gauss(mat, row, col);
+						boolean solvable = true;
+						String temp[] = new String[col-1];
+						double ans[] = new double[col-1];
+						algeo.solusiSPL(mat,row,col,solvable,temp);
+						algeo.stringToDouble(temp, ans);
 
-					}
-					else if(menuInput == 2){
-						
+						System.out.println("OUTPUT");
+						System.out.println("1. Output melalui screen");
+						System.out.println("2. Output melalui file");
+						System.out.print("Masukkan metode pilihan : ");*/
+						menuInput = scanner.nextInt();
+						if(menuInput == 1){
+
+						}
+						else if(menuInput == 2){
+							
+						}
 					}
 				}
 				else if(subMenu == 2){
