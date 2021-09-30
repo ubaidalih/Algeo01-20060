@@ -257,7 +257,7 @@ public class aljabarGeometri {
 	/* INTERPOLASI DAN REGRESI */
 	
     static void interpolasi(double mat[][],double ans[], int n){
-        double[][] polinom = new double[n+2][n+2];
+        double[][] polinom = new double[n+1][n+2];
         for(int i=0; i<=n; i++){
             polinom[i][0] = 1;
             for(int j=1; j<=n; j++){
@@ -265,7 +265,11 @@ public class aljabarGeometri {
             }
             polinom[i][n+1] = mat[i][1];
         }
-        gauss(polinom, n+1, n+1);
+        gauss(polinom, n+1, n+2);
+        boolean solvable = true;
+        String temp[] = new String[n+1];
+        solusiSPL(polinom, n+1, n+2, solvable, temp);
+        stringToDouble(temp, ans);
     }
 	
     static void regresi(double mat[][], double ans[], int n, int k){
@@ -291,7 +295,11 @@ public class aljabarGeometri {
                 }
             }
         }
-        gauss(temp, k+1, k+1);
+        gauss(temp, k+1, k+2);
+        boolean solvable = true;
+        String tempstr[] = new String[k+1];
+        solusiSPL(temp, k+1, k+2, solvable, tempstr);
+        stringToDouble(tempstr, ans);
     }
     
     /* SOLUSI SPL */
@@ -475,23 +483,26 @@ public class aljabarGeometri {
     static void print(double mat[][], int row, int col){
         for (int i = 0; i < row; i++, System.out.println()){
             for (int j = 0; j < col; j++){
-                System.out.print(mat[i][j]);
+                System.out.print(mat[i][j] + 0.0);
                 System.out.print(" ");
             }
             System.out.println();
         }       
     }
     
-    static void read(double mat[][], int row, int col){
+    static double[][] readMatriks(int row, int col){
+        double mat[][] = new double[row][col];
         Scanner in = new Scanner(System.in);
         for(int i=0; i < row; i++){
             for(int j=0; j < col; j++){
-                mat[i][j] = in.nextInt();
+                mat[i][j] = in.nextDouble();
             }
         }
+        in.close();
+        return mat;
     }
 
-    static double[][] inputFileSPL(String fileName)throws Exception{        
+    static double[][] inputFile(String fileName)throws Exception{        
         //File file = new File(new File("../test/"+fileName).getCanonicalPath());
         File file = new File(new File(fileName).getCanonicalPath());
         Scanner scanner = new Scanner(file);
@@ -517,6 +528,99 @@ public class aljabarGeometri {
         scanner2.close();
         
         return mat;
+    }
+
+
+    static void displaySPL(double ans[],boolean solvable, int col){
+        if(solvable){
+            System.out.println("Solusi sistem persamaan : ");
+            for (int i = 0; i < col; i++){
+                System.out.print("x_"+ (i+1) + " = ");
+                System.out.format("%.6f", ans[i]);
+                System.out.println();
+            }
+        }
+        else{
+            System.out.println("Sistem persamaan tidak memiliki solusi.");
+        }
+    }
+
+    static void saveFileSPL(double ans[], boolean solvable, int col){
+        if(solvable){
+            try{
+                FileWriter writer = new FileWriter("spl.txt");
+                writer.write("Solusi sistem persamaan : \n");
+                for (int i = 0; i < col; i++){
+                    writer.write("x_"+ (i+1) + " = ");
+                    String s = String.format("%.6f", ans[i]);
+                    writer.write(s);
+                    writer.write("\n");
+                }
+                writer.close();
+                System.out.println("File berhasil disimpan.");
+            }
+            catch (IOException e) {
+                System.out.println("Gagal menyimpan ke dalam file.");
+                e.printStackTrace();
+            }
+            
+        }
+        else{
+            try{
+                FileWriter writer = new FileWriter("splgauss.txt");
+                writer.write("Sistem persamaan tidak memiliki solusi");
+                writer.close();
+                System.out.println("File berhasil disimpan.");
+            }
+            catch (IOException e) {
+                System.out.println("Gagal menyimpan ke dalam file.");
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    static void displayInvers(double ans[][], boolean solvable, int n){
+        if(solvable){
+            System.out.println("Matriks invers : ");
+            for(int i=0; i<n; i++){
+                for(int j=0; j<n; j++){
+                    System.out.format("%.6f", ans[i][j]);
+                    System.out.print(" ");
+                }
+                System.out.println();
+            }
+        }
+        else{
+            System.out.println("Matriks tidak memiliki invers.");
+        }
+    }
+
+    static void saveFileInvers(double ans[][], boolean solvable, int n){
+        try{
+            FileWriter writer = new FileWriter("invers.txt");
+            if(solvable){
+                writer.write("Matriks invers : ");
+                for(int i=0; i<n; i++){
+                    for(int j=0; j<n; j++){
+                        String s = String.format("%.6f", ans[i][j]);
+                        writer.write(s);
+                        writer.write(" ");
+                    }
+                    writer.write("\n");
+                }
+            }
+            else{
+                writer.write("Matriks tidak memiliki invers.");
+            }
+            writer.close();
+            System.out.println("File berhasil disimpan.");
+        }
+        catch (IOException e) {
+            System.out.println("Gagal menyimpan ke dalam file.");
+            e.printStackTrace();
+        }
+
     }
     
     static void displayInterpolasi(double ans[], int n){
@@ -552,6 +656,7 @@ public class aljabarGeometri {
             System.out.format("%.6f", taksiran);
             System.out.println();
         }
+        scanner.close();
     }
     
     static void saveFileInterpolasi(double ans[], int n){
@@ -591,6 +696,7 @@ public class aljabarGeometri {
                 writer.write(s);
                 writer.write("\n");
             }
+            scanner.close();
             writer.close();
             System.out.println("File berhasil disimpan.");
         } 
@@ -630,6 +736,7 @@ public class aljabarGeometri {
             System.out.format("%.6f", taksiran);
             System.out.println();
         }
+        scanner.close();
     }
 
     static void saveFileRegresi(double ans[], int k){
@@ -666,6 +773,7 @@ public class aljabarGeometri {
                 writer.write(s);
                 writer.write("\n");
             }
+            scanner.close();
             writer.close();
             System.out.println("File berhasil disimpan.");
         } 
@@ -678,8 +786,12 @@ public class aljabarGeometri {
     /* Driver */
     
 	public static void main(String[] args) {
+        double[][] mat = { {72.4, 76.3,0.9}, {41.6, 70.3, 0.91}, {34.3, 77.1, 0.96}, {35.1, 68.0, 0.89} };
+        double ans[] = new double[3]; //double[k+1]
+        regresi(mat,ans, 4, 2);
+        displayRegresi(ans, 2);
 		// TODO Auto-generated method stub
-		Scanner scanner = new Scanner(System.in);
+		/*Scanner scanner = new Scanner(System.in);
         int row = scanner.nextInt();
         int col = scanner.nextInt();
 
@@ -694,7 +806,7 @@ public class aljabarGeometri {
 		solusiSPL(matriks, row, col, solvable, ans);
 		System.out.println(Arrays.toString(ans));
 		stringToDouble(ans,ansNew);
-		System.out.print(ansNew[0]*2);
+		System.out.print(ansNew[0]*2);*/
 	}
 
 }
