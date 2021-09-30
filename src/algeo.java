@@ -2,11 +2,11 @@
 import java.util.*;
 import java.io.*;
 
-public class aljabarGeometri {
+public class algeo {
 	
 	/* METODE SPL */
 	
-	static void gauss(double mat[][], int row, int col){
+	public static void gauss(double mat[][], int row, int col){
 		// Proses gauss biasa
 		int idxCol = 0; // Sekarang lagi mau ngebuat angak 1 di kolom ke berapa 
 		for (int i = 0; i < row; i++) {
@@ -70,7 +70,7 @@ public class aljabarGeometri {
 		}
 	}
 	
-	static void gaussJordan(double mat[][], int row, int col) {
+	public static void gaussJordan(double mat[][], int row, int col) {
 		gauss(mat, row, col);
 		// proses backtracking
 		
@@ -102,7 +102,7 @@ public class aljabarGeometri {
 		}
 	}
 	
-	static void invers(double mat[][],double finol[],boolean solvable, int n){
+	public static void invers(double mat[][],double finol[],boolean solvable, int n){
         double[] pengali = new double[n];
         for(int i = 0; i < n; i++){
             pengali[i] = mat[i][(mat[0].length) - 1];
@@ -135,7 +135,7 @@ public class aljabarGeometri {
         }
     }
 	
-    static void cramer(double mat[][],double ans[],boolean solvable, int n){
+    public static void cramer(double mat[][],double ans[],boolean solvable, int n){
         double[][] utama = new double[n][n];
         for(int i = 0; i < n; i++){
             for(int j = 0; j < n; j++){
@@ -172,7 +172,7 @@ public class aljabarGeometri {
 	
 	/* METODE DETERMINAN*/
 	
-	static double determinanKofaktor(double mat[][], int n){
+	public static double determinanKofaktor(double mat[][], int n){
         double det = 0;
 
         if (n == 1) return mat[0][0];
@@ -201,7 +201,7 @@ public class aljabarGeometri {
         return det;
     }
 
-    static double determinanOBE(double mat[][], int n){
+    public static double determinanOBE(double mat[][], int n){
        int cnt = 0;
        double mult = 1;
        // Proses gauss biasa
@@ -279,7 +279,7 @@ public class aljabarGeometri {
 	
 	/* METODE INVERS */
     
-	static void matriksInvers (double mat[][], double tmp[][], int n) {
+	public static void matriksInvers (double mat[][], double tmp[][], int n) {
 		
 		double det = determinanKofaktor(mat,n);
 		
@@ -297,7 +297,7 @@ public class aljabarGeometri {
 	
 	/* INTERPOLASI DAN REGRESI */
 	
-    static void interpolasi(double mat[][],double ans[], int n){
+    public static void interpolasi(double mat[][],double ans[], int n){
         double[][] polinom = new double[n+1][n+2];
         for(int i=0; i<=n; i++){
             polinom[i][0] = 1;
@@ -313,7 +313,7 @@ public class aljabarGeometri {
         stringToDouble(temp, ans);
     }
 	
-    static void regresi(double mat[][], double ans[], int n, int k){
+    public static void regresi(double mat[][], double ans[], int n, int k){
         double temp[][] = new double[k+1][k+2];
         //compute augmented baris pertama
         temp[0][0] = n;
@@ -344,7 +344,7 @@ public class aljabarGeometri {
     }
     
     /* SOLUSI SPL */
-    static void solusiSPL(double mat[][], int row, int col, boolean solvable, String ans[]) {
+    public static void solusiSPL(double mat[][], int row, int col, boolean solvable, String ans[]) {
         solvable = true;
         int barisnol = 0;
         for(int i = row-1; i>=0; i--){
@@ -423,7 +423,7 @@ public class aljabarGeometri {
         }
     }
     
-    static void stringToDouble (String ans[], double ansNew[]) {
+    public static void stringToDouble (String ans[], double ansNew[]) {
     	for (int i = 0; i < ans.length; i++) {
     		ansNew[i] = Double.parseDouble(ans[i]);
     	}
@@ -432,7 +432,7 @@ public class aljabarGeometri {
     
 	/* FUNGSI UTILITAS */
 	
-    static void swap_row(double mat[][], int col, int i, int j){
+    public static void swap_row(double mat[][], int col, int i, int j){
         for (int k = 0; k < col; k++){
             double temp = mat[i][k];
             mat[i][k] = mat[j][k];
@@ -440,7 +440,7 @@ public class aljabarGeometri {
         }
     }
     
-    static void swap_col(double mat[][], int row, int i, int j){
+    public static void swap_col(double mat[][], int row, int i, int j){
         for (int k = 0; k < row; k++){
             double temp = mat[k][i];
             mat[k][i] = mat[k][j];
@@ -448,7 +448,7 @@ public class aljabarGeometri {
         }
     }	
     
-    static double[][] removeLastCol(double mat[][])
+    public static double[][] removeLastCol(double mat[][])
     {
         int row = mat.length;
         int col = mat[0].length;
@@ -467,7 +467,7 @@ public class aljabarGeometri {
         return newArray;
     }
 
-	static void matriksTranspose(double mat[][], int n) {
+	public static void matriksTranspose(double mat[][], int n) {
 		double[][] tmp = new double[n][n];
 		
 		for (int i = 0; i < n; i++) {
@@ -483,7 +483,7 @@ public class aljabarGeometri {
 		}
 	}
 	
-	static void matriksKofaktor(double mat[][], double tmp[][], int n) {
+	public static void matriksKofaktor(double mat[][], double tmp[][], int n) {
 		double[][] temp = new double[n-1][n-1];
 		
 		for (int matRow = 0; matRow < n; matRow++) {
@@ -510,7 +510,7 @@ public class aljabarGeometri {
 		}
 	}
     
-	static boolean tesDouble(String x) {
+	public static boolean tesDouble(String x) {
 		
 		try {
 		    double doubleValue = Double.parseDouble(x);
@@ -521,7 +521,7 @@ public class aljabarGeometri {
 	}
     /* FUNGSI I/O */
     
-    static void print(double mat[][], int row, int col){
+    public static void print(double mat[][], int row, int col){
         for (int i = 0; i < row; i++, System.out.println()){
             for (int j = 0; j < col; j++){
                 System.out.print(mat[i][j] + 0.0);
@@ -531,7 +531,7 @@ public class aljabarGeometri {
         }       
     }
     
-    static double[][] readMatriks(int row, int col){
+    public static double[][] readMatriks(int row, int col){
         double mat[][] = new double[row][col];
         Scanner in = new Scanner(System.in);
         for(int i=0; i < row; i++){
@@ -543,7 +543,7 @@ public class aljabarGeometri {
         return mat;
     }
 
-    static double[][] inputFile(String fileName)throws Exception{        
+    public static double[][] inputFile(String fileName)throws Exception{        
         //File file = new File(new File("../test/"+fileName).getCanonicalPath());
         File file = new File(new File(fileName).getCanonicalPath());
         Scanner scanner = new Scanner(file);
@@ -572,7 +572,7 @@ public class aljabarGeometri {
     }
 
 
-    static void displaySPL(double ans[],boolean solvable, int col){
+    public static void displaySPL(double ans[],boolean solvable, int col){
         if(solvable){
             System.out.println("Solusi sistem persamaan : ");
             for (int i = 0; i < col; i++){
@@ -586,7 +586,7 @@ public class aljabarGeometri {
         }
     }
 
-    static void saveFileSPL(double ans[], boolean solvable, int col){
+    public static void saveFileSPL(double ans[], boolean solvable, int col){
         if(solvable){
             try{
                 FileWriter writer = new FileWriter("spl.txt");
@@ -621,7 +621,7 @@ public class aljabarGeometri {
     }
 
 
-    static void displayInvers(double ans[][], boolean solvable, int n){
+    public static void displayInvers(double ans[][], boolean solvable, int n){
         if(solvable){
             System.out.println("Matriks invers : ");
             for(int i=0; i<n; i++){
@@ -637,7 +637,7 @@ public class aljabarGeometri {
         }
     }
 
-    static void saveFileInvers(double ans[][], boolean solvable, int n){
+    public static void saveFileInvers(double ans[][], boolean solvable, int n){
         try{
             FileWriter writer = new FileWriter("invers.txt");
             if(solvable){
@@ -664,7 +664,7 @@ public class aljabarGeometri {
 
     }
     
-    static void displayInterpolasi(double ans[], int n){
+    public static void displayInterpolasi(double ans[], int n){
         System.out.println("Persamaan Interpolasi : ");
         System.out.print("f(x) = ");
         for (int i = 0; i < n+1; i++){
@@ -700,7 +700,7 @@ public class aljabarGeometri {
         scanner.close();
     }
     
-    static void saveFileInterpolasi(double ans[], int n){
+    public static void saveFileInterpolasi(double ans[], int n){
         try {
             FileWriter writer = new FileWriter("interpolasi.txt");
             writer.write("Persamaan Interpolasi : \n");
@@ -747,7 +747,7 @@ public class aljabarGeometri {
         }
     }
     
-    static void displayRegresi(double ans[], int k){
+    public static void displayRegresi(double ans[], int k){
         System.out.println("Model regresi : ");
         System.out.print("y = ");
         for (int i = 0; i < k+1; i++){
@@ -780,7 +780,7 @@ public class aljabarGeometri {
         scanner.close();
     }
 
-    static void saveFileRegresi(double ans[], int k){
+    public static void saveFileRegresi(double ans[], int k){
         try {
             FileWriter writer = new FileWriter("regresi.txt");
             writer.write("Model regresi : \n");
