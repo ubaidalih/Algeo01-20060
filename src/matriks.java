@@ -70,6 +70,46 @@ class matriks{
             }
         }
     }
+    static double[][] inputSPL(int row, int col){
+        double mat[][] = new double[row][col+1];
+        Scanner scanner = new Scanner(System.in);
+        for(int i=0; i<row; i++){
+            for(int j=0; j<=col; j++){
+                mat[i][j] = scanner.nextDouble();
+            }
+        }
+        scanner.close();
+        return mat;
+    }
+
+    static double[][] inputFile(String fileName)throws Exception{
+        //Pathnya masih bingung        
+        //File file = new File(new File("../test/"+fileName).getCanonicalPath());
+        File file = new File(new File(fileName).getCanonicalPath());
+        Scanner scanner = new Scanner(file);
+
+        int col = 0;
+        int row = 0;
+        while(scanner.hasNextLine()){
+            if(row == 0){
+                col = (scanner.nextLine().trim().split(" ")).length;
+            }
+            else scanner.nextLine();
+            row++;
+        }
+        scanner.close();
+
+        Scanner scanner2 = new Scanner(file);
+        double mat[][] = new double[row][col];
+        for (int i = 0; i < row; i++){
+            for (int j = 0; j <col; j++){
+                mat[i][j] = scanner2.nextDouble();
+            }
+        }
+        scanner2.close();
+        
+        return mat;
+    }
 
     static void displaySPL(double ans[],boolean solvable, int col){
         if(solvable){
@@ -405,6 +445,21 @@ class matriks{
         }
     }
 
+
+    static double[][] inputMatriks(int row, int col){
+        //Bisa buat determinan dan invers
+        double mat[][] = new double[row][col+1];
+        Scanner scanner = new Scanner(System.in);
+        for(int i=0; i<row; i++){
+            for(int j=0; j<col; j++){
+                mat[i][j] = scanner.nextDouble();
+            }
+        }
+        scanner.close();
+        return mat;
+    }
+
+
     static void displayInvers(double ans[][], boolean solvable, int n){
         if(solvable){
             System.out.println("Matriks invers : ");
@@ -600,6 +655,18 @@ class matriks{
         return det;
     }
     
+    static double[][] inputInterpolasi(int n){
+        double mat[][] = new double[n+1][2];
+        Scanner scanner = new Scanner(System.in);
+        for(int i=0; i<n+1; i++){
+            for(int j=0; j<2; j++){
+                mat[i][j] = scanner.nextDouble();
+            }
+        }
+        scanner.close();
+        return mat;
+    }
+
 	static void interpolasi(double mat[][],double ans[], int n){
         double[][] polinom = new double[n+2][n+2];
         for(int i=0; i<=n; i++){
@@ -645,8 +712,19 @@ class matriks{
             System.out.format("%.6f", taksiran);
             System.out.println();
         }
+        scanner.close();
     }
-
+    static double[][] inputRegresi(int n, int k){
+        double mat[][] = new double[n][k+1];
+        Scanner scanner = new Scanner(System.in);
+        for(int i=0; i<n; i++){
+            for(int j=0; j<k+1; j++){
+                mat[i][j] = scanner.nextDouble();
+            }
+        }
+        scanner.close();
+        return mat;
+    }
 	static void regresi(double mat[][], double ans[], int n, int k){
         double temp[][] = new double[k+1][k+2];
         //compute augmented baris pertama
@@ -704,6 +782,7 @@ class matriks{
             System.out.format("%.6f", taksiran);
             System.out.println();
         }
+        scanner.close();
     }
 
     static void saveFileRegresi(double ans[], int k){
@@ -740,6 +819,7 @@ class matriks{
                 writer.write(s);
                 writer.write("\n");
             }
+            scanner.close();
             writer.close();
             System.out.println("File berhasil disimpan.");
         } 

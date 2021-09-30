@@ -8,13 +8,15 @@ import java.io.*;
 
 class Gauss{
 
-    static void inputAugmented(double mat[][], int row, int col){
+    static double[][] inputSPL(int row, int col){
+        double mat[][] = new double[row][col+1];
         Scanner scanner = new Scanner(System.in);
         for(int i=0; i<row; i++){
             for(int j=0; j<=col; j++){
                 mat[i][j] = scanner.nextDouble();
             }
         }
+        return mat;
     }
  
     static void gauss(double mat[][], double ans[], boolean solvable, int row, int col){
@@ -60,7 +62,6 @@ class Gauss{
                 break;
             }
         }
-
         if(solvable){
             if(row - barisnol == col){
                 int newrow = row - barisnol;
@@ -162,8 +163,36 @@ class Gauss{
         }
     }
 
-    public static void main(String[] args){
-        double[][] mat = { {1, -1, 0, 0, 1, 3}, {1, 1, 0, -3, 0, 6}, {2, -1, 0, 1, -1, 5}, {-1, 2, 0, -2, -1, -1} };
+    static double[][] inputFileSPL(String fileName)throws Exception{        
+        //File file = new File(new File("../test/"+fileName).getCanonicalPath());
+        File file = new File(new File(fileName).getCanonicalPath());
+        Scanner scanner = new Scanner(file);
+
+        int col = 0;
+        int row = 0;
+        while(scanner.hasNextLine()){
+            if(row == 0){
+                col = (scanner.nextLine().trim().split(" ")).length;
+            }
+            else scanner.nextLine();
+            row++;
+        }
+        scanner.close();
+
+        Scanner scanner2 = new Scanner(file);
+        double mat[][] = new double[row][col];
+        for (int i = 0; i < row; i++){
+            for (int j = 0; j <col; j++){
+                mat[i][j] = scanner2.nextDouble();
+            }
+        }
+        scanner2.close();
+        
+        return mat;
+    }
+
+    public static void main(String[] args)throws Exception{
+        //double[][] mat = { {1, -1, 0, 0, 1, 3}, {1, 1, 0, -3, 0, 6}, {2, -1, 0, 1, -1, 5}, {-1, 2, 0, -2, -1, -1} };
         //double[][] mat2 = { {2,0,8,0,8}, {0,1,0,4,6}, {-4,0,6,0,6}, {0,-2,0,3,-1}, {2,0,-4,0,-4}, {0,1,0,-2,0} };
         /*Scanner scanner = new Scanner(System.in);
         int row, col;
@@ -171,11 +200,20 @@ class Gauss{
         col = scanner.nextInt();
         double mat[][] = new double[row][col+1];
         inputAugmented(mat, row, col);*/
+        /*
         double ans[]= new double[5];
         boolean solvable = true;
         gauss(mat,ans,solvable,4,5);
         print(mat,4,5);
-        displayGauss(ans,solvable,5);
+        displaySPL(ans,solvable,5);*/
+        double mat[][] = inputFileSPL("1a.txt");
+        int row = mat.length;
+        int col = mat[0].length - 1;
+        double ans[]= new double[col+1];
+        boolean solvable = true;
+        gauss(mat,ans,solvable,row,col);
+        print(mat,row,col);
+        displaySPL(ans,solvable,col);
     }
  
   //Buat driver sendiri kalo mau ngetes
