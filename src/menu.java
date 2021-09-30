@@ -1,8 +1,10 @@
-import java.util.Scanner;
+package pack;
+import java.util.*;
+import java.io.*;
 
 public class menu {
 
-	public static void main(String[] args) {
+	public static void main(String[] args){
 
 		while(true) {
 			// Menu utama
@@ -35,7 +37,29 @@ public class menu {
 					System.out.print("Masukkan metode pilihan : ");
 					int menuInput = scanner.nextInt();
 					if(menuInput == 1){
+						int row, col;
+						row = scanner.nextInt();
+						col = scanner.nextInt();
+						double mat[][] = new double[row][col];
+						mat = algeo.readMatriks(row,col);
+						algeo.gauss(mat, row, col);
+						boolean solvable = true;
+						String temp[] = new String[col-1];
+						double ans[] = new double[col-1];
+						algeo.solusiSPL(mat,row,col,solvable,temp);
+						algeo.stringToDouble(temp, ans);
 
+						System.out.println("OUTPUT");
+						System.out.println("1. Output melalui screen");
+						System.out.println("2. Output melalui file");
+						System.out.print("Masukkan metode pilihan : ");
+						int menuOutput = scanner.nextInt();
+						if(menuOutput == 1){
+							algeo.displaySPL(ans,solvable, col-1);
+						}
+						else if(menuOutput == 2){
+							//algeo.saveFileSPL(ans,solvable, col-1);
+						}
 					}
 					else if(menuInput == 2){
 						
