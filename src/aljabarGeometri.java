@@ -300,13 +300,13 @@ public class aljabarGeometri {
         int barisnol = 0;
         for(int i = row-1; i>=0; i--){
             int j = 0;
-            while((j<col) && (mat[i][j]==(double)0)){
+            while((j < col) && (mat[i][j]==(double)0)){
                 j++;
             }
             System.out.print(barisnol);
-            if(j == (col-2)){
+            if(j == (col-1)){
                 solvable = false;
-            } else if(j == (col-1)){
+            }else if(j == (col)){
                 barisnol++;
             } else {
             	break;
@@ -325,7 +325,6 @@ public class aljabarGeometri {
         		ans[i] = listVar[i];
         	}
         } else if(solvable) {
-        	System.out.println(barisnol);
     		// menghitung hasil dan meletakkannya dalam matriks jawaban
     		for (int i = row-(barisnol+1); i > -1; i--) {
     			
@@ -365,14 +364,20 @@ public class aljabarGeometri {
     					break;
     						
     				} else if (ans[j] == "tai") {
-    					System.out.print(i);
-    					System.out.println(j);
+    					//System.out.print(i);
+    					//System.out.println(j);
     					ans[j] = listVar[cnt];
     					cnt++;
     				}
     			}
     		}
         }
+    }
+    
+    static void stringToDouble (String ans[], double ansNew[]) {
+    	for (int i = 0; i < ans.length; i++) {
+    		ansNew[i] = Double.parseDouble(ans[i]);
+    	}
     }
     
     
@@ -684,9 +689,12 @@ public class aljabarGeometri {
 		print(matriks, row, col);
 		//gauss(matriks, row, col);
 		String ans[] = new String[col-1];
+		double ansNew[] = new double[col-1];
 		boolean solvable = false;
 		solusiSPL(matriks, row, col, solvable, ans);
-		System.out.println(Arrays.deepToString(ans));
+		System.out.println(Arrays.toString(ans));
+		stringToDouble(ans,ansNew);
+		System.out.print(ansNew[0]*2);
 	}
 
 }
