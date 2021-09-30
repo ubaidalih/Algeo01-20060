@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.*;
 
 class regresi{
-    static void gauss(double mat[][], double ans[], int row, int col){
+    static void gauss(double mat[][], double ans[], boolean solvable, int row, int col){
         for(int j = 0; j < col; j++) {
             int now = 0;   
             while (j<row && j+now<col && mat[j][j+now] != 1) {
@@ -28,7 +28,7 @@ class regresi{
         }
         //print(mat,row,col);
 
-        boolean solvable = true;
+        solvable = true;
         int barisnol = 0;
         for(int i = row-1; i>=0; i--){
             int j = 0;
@@ -56,21 +56,18 @@ class regresi{
                     }
                     ans[i] = ans[i] / mat[i][i];
                 }
-                
-                System.out.println();
+                /*
+                System.out.println("Sistem persamaan memiliki solusi unik.");
                 System.out.println("Solusi sistem persamaan : ");
                 for (int i = 0; i < col; i++){
                     System.out.format("%.6f", ans[i]);
                     System.out.println();
-                }
+                }*/
             }
             else{
-                System.out.println("Sistem persamaan memiliki solusi parametrik.");
+                //System.out.println("Sistem persamaan memiliki solusi parametrik.");
                 //solusi parametriknya belom buat.
             }
-        }
-        else{
-            System.out.println("Sistem persamaan tidak memiliki solusi.");
         }
     }
 
@@ -97,8 +94,8 @@ class regresi{
                 }
             }
         }
-        
-        gauss(temp,ans, k+1, k+1);
+        boolean solvable = true;
+        gauss(temp,ans,solvable, k+1, k+1);
     }
 
     static void displayRegresi(double ans[], int k){

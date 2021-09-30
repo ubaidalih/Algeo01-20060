@@ -4,6 +4,8 @@
 //presisi masih ada masalah, kayaknya masalah di pembagian sementara ngakalinnya kayak line 37
 
 import java.util.*;
+import java.io.*;
+
 class Gauss{
 
     static void inputAugmented(double mat[][], int row, int col){
@@ -15,7 +17,7 @@ class Gauss{
         }
     }
  
-    static void gauss(double mat[][], double ans[], int row, int col){
+    static void gauss(double mat[][], double ans[], boolean solvable, int row, int col){
         for(int j = 0; j < col; j++) {
             int now = 0;   
             while (j<row && j+now<col && mat[j][j+now] != 1) {
@@ -41,7 +43,7 @@ class Gauss{
         }
         //print(mat,row,col);
 
-        boolean solvable = true;
+        solvable = true;
         int barisnol = 0;
         for(int i = row-1; i>=0; i--){
             int j = 0;
@@ -69,21 +71,65 @@ class Gauss{
                     }
                     ans[i] = ans[i] / mat[i][i];
                 }
-                
-                System.out.println();
+                /*
+                System.out.println("Sistem persamaan memiliki solusi unik.");
                 System.out.println("Solusi sistem persamaan : ");
                 for (int i = 0; i < col; i++){
                     System.out.format("%.6f", ans[i]);
                     System.out.println();
-                }
+                }*/
             }
             else{
-                System.out.println("Sistem persamaan memiliki solusi parametrik.");
+                //System.out.println("Sistem persamaan memiliki solusi parametrik.");
                 //solusi parametriknya belom buat.
+            }
+        }
+    }
+    static void displayGauss(double ans[],boolean solvable, int col){
+        if(solvable){
+            System.out.println("Solusi sistem persamaan : ");
+            for (int i = 0; i < col; i++){
+                System.out.print("x_"+ (i+1) + " = ");
+                System.out.format("%.6f", ans[i]);
+                System.out.println();
             }
         }
         else{
             System.out.println("Sistem persamaan tidak memiliki solusi.");
+        }
+    }
+
+    static void saveFileGauss(double ans[], boolean solvable, int col){
+        if(solvable){
+            try{
+                FileWriter writer = new FileWriter("splgauss.txt");
+                writer.write("Solusi sistem persamaan : \n");
+                for (int i = 0; i < col; i++){
+                    writer.write("x_"+ (i+1) + " = ");
+                    String s = String.format("%.6f", ans[i]);
+                    writer.write(s);
+                    writer.write("\n");
+                }
+                writer.close();
+                System.out.println("File berhasil disimpan.");
+            }
+            catch (IOException e) {
+                System.out.println("Gagal menyimpan ke dalam file.");
+                e.printStackTrace();
+            }
+            
+        }
+        else{
+            try{
+                FileWriter writer = new FileWriter("splgauss.txt");
+                writer.write("Sistem persamaan tidak memiliki solusi");
+                writer.close();
+                System.out.println("File berhasil disimpan.");
+            }
+            catch (IOException e) {
+                System.out.println("Gagal menyimpan ke dalam file.");
+                e.printStackTrace();
+            }
         }
     }
  
@@ -117,17 +163,19 @@ class Gauss{
     }
 
     public static void main(String[] args){
-        //double[][] mat = { {1, -1, 0, 0, 1, 3}, {1, 1, 0, -3, 0, 6}, {2, -1, 0, 1, -1, 5}, {-1, 2, 0, -2, -1, -1} };
+        double[][] mat = { {1, -1, 0, 0, 1, 3}, {1, 1, 0, -3, 0, 6}, {2, -1, 0, 1, -1, 5}, {-1, 2, 0, -2, -1, -1} };
         //double[][] mat2 = { {2,0,8,0,8}, {0,1,0,4,6}, {-4,0,6,0,6}, {0,-2,0,3,-1}, {2,0,-4,0,-4}, {0,1,0,-2,0} };
-        Scanner scanner = new Scanner(System.in);
+        /*Scanner scanner = new Scanner(System.in);
         int row, col;
         row = scanner.nextInt();
         col = scanner.nextInt();
         double mat[][] = new double[row][col+1];
-        inputAugmented(mat, row, col);
-        double ans[]= new double[4];
-        gauss(mat,ans,4,5);
+        inputAugmented(mat, row, col);*/
+        double ans[]= new double[5];
+        boolean solvable = true;
+        gauss(mat,ans,solvable,4,5);
         print(mat,4,5);
+        displayGauss(ans,solvable,5);
     }
  
   //Buat driver sendiri kalo mau ngetes

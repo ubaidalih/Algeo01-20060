@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.*;
 
 class interpolasi{
-    static void gauss(double mat[][], double ans[], int row, int col){
+    static void gauss(double mat[][], double ans[], boolean solvable, int row, int col){
         for(int j = 0; j < col; j++) {
             int now = 0;   
             while (j<row && j+now<col && mat[j][j+now] != 1) {
@@ -28,7 +28,7 @@ class interpolasi{
         }
         //print(mat,row,col);
 
-        boolean solvable = true;
+        solvable = true;
         int barisnol = 0;
         for(int i = row-1; i>=0; i--){
             int j = 0;
@@ -56,21 +56,18 @@ class interpolasi{
                     }
                     ans[i] = ans[i] / mat[i][i];
                 }
-                
-                System.out.println();
+                /*
+                System.out.println("Sistem persamaan memiliki solusi unik.");
                 System.out.println("Solusi sistem persamaan : ");
                 for (int i = 0; i < col; i++){
                     System.out.format("%.6f", ans[i]);
                     System.out.println();
-                }
+                }*/
             }
             else{
-                System.out.println("Sistem persamaan memiliki solusi parametrik.");
+                //System.out.println("Sistem persamaan memiliki solusi parametrik.");
                 //solusi parametriknya belom buat.
             }
-        }
-        else{
-            System.out.println("Sistem persamaan tidak memiliki solusi.");
         }
     }
 	
@@ -91,8 +88,8 @@ class interpolasi{
             }
             polinom[i][n+1] = mat[i][1];
         }
-        
-        gauss(polinom,ans, n+1, n+1);
+        boolean solvable = true;
+        gauss(polinom,ans,solvable, n+1, n+1);
     }
     static void displayInterpolasi(double ans[], int n){
         System.out.println("Persamaan Interpolasi : ");
@@ -177,6 +174,7 @@ class interpolasi{
     public static void main(String[] args){
         double[][] mat = { {0.1, 0.003}, {0.3, 0.067}, {0.5, 0.148} };
         double ans[]= new double[3]; //double[n+1]
+
         interpolasi(mat,ans,2);
         //displayInterpolasi(ans,2);
         saveFileInterpolasi(ans,2);

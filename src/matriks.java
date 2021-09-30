@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.*;
 
 class matriks{
-    static void gauss(double mat[][], double ans[], int row, int col){
+    static void gauss(double mat[][], double ans[], boolean solvable, int row, int col){
         for(int j = 0; j < col; j++) {
             int now = 0;   
             while (j<row && j+now<col && mat[j][j+now] != 1) {
@@ -28,7 +28,7 @@ class matriks{
         }
         //print(mat,row,col);
 
-        boolean solvable = true;
+        solvable = true;
         int barisnol = 0;
         for(int i = row-1; i>=0; i--){
             int j = 0;
@@ -56,21 +56,66 @@ class matriks{
                     }
                     ans[i] = ans[i] / mat[i][i];
                 }
-                
-                System.out.println();
+                /*
+                System.out.println("Sistem persamaan memiliki solusi unik.");
                 System.out.println("Solusi sistem persamaan : ");
                 for (int i = 0; i < col; i++){
                     System.out.format("%.6f", ans[i]);
                     System.out.println();
-                }
+                }*/
             }
             else{
-                System.out.println("Sistem persamaan memiliki solusi parametrik.");
+                //System.out.println("Sistem persamaan memiliki solusi parametrik.");
                 //solusi parametriknya belom buat.
+            }
+        }
+    }
+
+    static void displayGauss(double ans[],boolean solvable, int col){
+        if(solvable){
+            System.out.println("Solusi sistem persamaan : ");
+            for (int i = 0; i < col; i++){
+                System.out.print("x_"+ (i+1) + " = ");
+                System.out.format("%.6f", ans[i]);
+                System.out.println();
             }
         }
         else{
             System.out.println("Sistem persamaan tidak memiliki solusi.");
+        }
+    }
+
+    static void saveFileGauss(double ans[], boolean solvable, int col){
+        if(solvable){
+            try{
+                FileWriter writer = new FileWriter("splgauss.txt");
+                writer.write("Solusi sistem persamaan : \n");
+                for (int i = 0; i < col; i++){
+                    writer.write("x_"+ (i+1) + " = ");
+                    String s = String.format("%.6f", ans[i]);
+                    writer.write(s);
+                    writer.write("\n");
+                }
+                writer.close();
+                System.out.println("File berhasil disimpan.");
+            }
+            catch (IOException e) {
+                System.out.println("Gagal menyimpan ke dalam file.");
+                e.printStackTrace();
+            }
+            
+        }
+        else{
+            try{
+                FileWriter writer = new FileWriter("splgauss.txt");
+                writer.write("Sistem persamaan tidak memiliki solusi");
+                writer.close();
+                System.out.println("File berhasil disimpan.");
+            }
+            catch (IOException e) {
+                System.out.println("Gagal menyimpan ke dalam file.");
+                e.printStackTrace();
+            }
         }
     }
  
@@ -419,8 +464,8 @@ class matriks{
             }
             polinom[i][n+1] = mat[i][1];
         }
-        
-        gauss(polinom,ans, n+1, n+1);
+        boolean solvable = true;
+        gauss(polinom,ans,solvable, n+1, n+1);
     }
     static void displayInterpolasi(double ans[], int n){
         System.out.println("Persamaan Interpolasi : ");
@@ -480,8 +525,8 @@ class matriks{
                 }
             }
         }
-        
-        gauss(temp,ans, k+1, k+1);
+        boolean solvable = true;
+        gauss(temp,ans,solvable, k+1, k+1);
     }
 
     static void displayRegresi(double ans[], int k){
