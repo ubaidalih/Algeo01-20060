@@ -271,7 +271,29 @@ public class menu {
 					System.out.print("Masukkan metode pilihan : ");
 					int menuInput = scanner.nextInt();
 					if(menuInput == 1){
-
+						int row;
+						row = scanner.nextInt();
+						double mat[][] = new double[row][row];
+						algeo.readMatriks(mat, row, row);
+						double ans[][] = new double[row][row];
+						boolean solvable = true;
+						double cekDet = algeo.determinanKofaktor(mat, row);
+						if (cekDet == 0){
+							solvable = false;
+						} else{
+							algeo.matriksInvers(mat, ans, row);
+						}
+						System.out.println("OUTPUT");
+						System.out.println("1. Output melalui screen");
+						System.out.println("2. Output melalui file");
+						System.out.print("Masukkan metode pilihan : ");
+						int menuOutput = scanner.nextInt();
+						if(menuOutput == 1){
+							algeo.displayInvers(ans, solvable, row);
+						}
+						else if(menuOutput == 2){
+							algeo.saveFileInvers(ans, solvable, row);
+						}
 					}
 					else if(menuInput == 2){
 						
