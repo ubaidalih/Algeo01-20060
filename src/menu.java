@@ -150,13 +150,8 @@ public class menu {
 						System.out.println("Masukkan input : ");
 						int n;
 						n = scanner.nextInt();
-						double mat[][] = new double[n][n];
-						//algeo.readMatriks(mat,row,col);
-						for(int i=0; i<n; i++){
-							for(int j=0; j<n; j++){
-								mat[i][j] = scanner.nextDouble();
-							}
-						}
+						double mat[][] = new double[n][n+1];
+						algeo.readMatriks(mat,n,n+1);
 						boolean solvable = true;
 						double ans[] = new double[n];
 						String ansNew[] = new String[n];
@@ -210,13 +205,8 @@ public class menu {
 						System.out.println("Masukkan input : ");
 						int n;
 						n = scanner.nextInt();
-						double mat[][] = new double[n][n];
-						//algeo.readMatriks(mat,row,col);
-						for(int i=0; i<n; i++){
-							for(int j=0; j<n; j++){
-								mat[i][j] = scanner.nextDouble();
-							}
-						}
+						double mat[][] = new double[n][n+1];
+						algeo.readMatriks(mat,n,n+1);
 						boolean solvable = true;
 						double ans[] = new double[n];
 						algeo.cramer(mat, ans, solvable, n);
