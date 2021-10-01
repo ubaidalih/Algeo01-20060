@@ -59,7 +59,8 @@ public class menu {
 					}
 					else if(menuInput == 2){
 						System.out.print("Masukkan nama file : ");
-						String s = scanner.nextLine();
+						Scanner in = new Scanner(System.in);
+						String s = in.nextLine();
 						double[][] mat = algeo.inputFile(s);
 						int row = mat.length;
 						int col = mat[0].length;
@@ -117,7 +118,8 @@ public class menu {
 					}
 					else if(menuInput == 2){
 						System.out.print("Masukkan nama file : ");
-						String s = scanner.nextLine();
+						Scanner in = new Scanner(System.in);
+						String s = in.nextLine();
 						double[][] mat = algeo.inputFile(s);
 						int row = mat.length;
 						int col = mat[0].length;
@@ -175,7 +177,8 @@ public class menu {
 					}
 					else if(menuInput == 2){
 						System.out.print("Masukkan nama file : ");
-						String s = scanner.nextLine();
+						Scanner in = new Scanner(System.in);
+						String s = in.nextLine();
 						double[][] mat = algeo.inputFile(s);
 						int n = mat.length;
 						boolean solvable = true;
@@ -234,7 +237,8 @@ public class menu {
 					}
 					else if(menuInput == 2){
 						System.out.print("Masukkan nama file : ");
-						String s = scanner.nextLine();
+						Scanner in = new Scanner(System.in);
+						String s = in.nextLine();
 						double[][] mat = algeo.inputFile(s);
 						int n = mat.length;
 						boolean solvable = true;
@@ -300,7 +304,8 @@ public class menu {
 					}
 					else if(menuInput == 2){
 						System.out.print("Masukkan nama file : ");
-						String str = scanner.nextLine();
+						Scanner in = new Scanner(System.in);
+						String str = in.nextLine();
 						double mat[][] = algeo.inputFile(str);
 						int n = mat.length;
 						System.out.println("OUTPUT");
@@ -367,7 +372,8 @@ public class menu {
 					}
 					else if(menuInput == 2){
 						System.out.print("Masukkan nama file : ");
-						String str = scanner.nextLine();
+						Scanner in = new Scanner(System.in);
+						String str = in.nextLine();
 						double mat[][] = algeo.inputFile(str);
 						int n = mat.length;
 						System.out.println("OUTPUT");
@@ -435,7 +441,8 @@ public class menu {
 					}
 					else if(menuInput == 2){
 						System.out.print("Masukkan nama file : ");
-						String s = scanner.nextLine();
+						Scanner in = new Scanner(System.in);
+						String s = in.nextLine();
 						double mat[][] = algeo.inputFile(s);
 						int row = mat.length;
 						double ans[][] = new double[row][row];
@@ -494,7 +501,8 @@ public class menu {
 					}
 					else if(menuInput == 2){
 						System.out.print("Masukkan nama file : ");
-						String s = scanner.nextLine();
+						Scanner in = new Scanner(System.in);
+						String s = in.nextLine();
 						double mat[][] = algeo.inputFile(s);
 						int row = mat.length;
 						double ans[][] = new double[row][row];
@@ -546,7 +554,8 @@ public class menu {
 				}
 				else if(menuInput == 2){
 					System.out.print("Masukkan nama file : ");
-					String s = scanner.nextLine();
+					Scanner in = new Scanner(System.in);
+					String s = in.nextLine();
 					double mat[][] = algeo.inputFile(s);
 					int n = mat.length - 1;
 					double ans[] = new double[n+1];
@@ -593,7 +602,8 @@ public class menu {
 				}
 				else if(menuInput == 2){
 					System.out.print("Masukkan nama file : ");
-					String s = scanner.nextLine();
+					Scanner in = new Scanner(System.in);
+					String s = in.nextLine();
 					double mat[][] = algeo.inputFile(s);
 					int row = mat.length;
 					int col = mat[0].length;
