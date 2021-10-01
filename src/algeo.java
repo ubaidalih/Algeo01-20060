@@ -428,6 +428,11 @@ public class algeo {
     	}
     }
     
+    public static void doubleToString (double ans[], String ansNew[]) {
+    	for (int i = 0; i < ans.length; i++) {
+    		ansNew[i] = Double.toString(ans[i]);
+    	}
+    }
     
 	/* FUNGSI UTILITAS */
 	
