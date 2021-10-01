@@ -352,7 +352,6 @@ public class algeo {
             while((j < col) && (mat[i][j]==(double)0)){
                 j++;
             }
-            System.out.print(barisnol);
             if(j == (col-1)){
                 solvable = false;
             }else if(j == (col)){
@@ -429,6 +428,11 @@ public class algeo {
     	}
     }
     
+    public static void doubleToString (double ans[], String ansNew[]) {
+    	for (int i = 0; i < ans.length; i++) {
+    		ansNew[i] = Double.toString(ans[i]);
+    	}
+    }
     
 	/* FUNGSI UTILITAS */
 	
