@@ -572,8 +572,8 @@ public class algeo {
     public static double[][] inputFile(String fileName){
         double temp[][] = new double[1][1];        
         try{
-            //File file = new File(new File("../test/"+fileName).getCanonicalPath());
-            File file = new File(new File(fileName).getCanonicalPath());
+            File file = new File(new File("../test/"+fileName).getCanonicalPath());
+            //File file = new File(new File(fileName).getCanonicalPath());
             Scanner scanner = new Scanner(file);
 
             int col = 0;
