@@ -294,6 +294,31 @@ public class algeo {
 		}
 		
 	}
+
+    public static void matriksInversJordan(double mat[][], double ans[][], int n){
+		double[][] tmp = new double[n][2*n];
+		for(int i=0; i<n; i++){
+			for(int j=0; j<n; j++){
+				tmp[i][j] = mat[i][j];
+			}
+		}
+		for(int i=0; i<n; i++){
+			for(int j=n; j<2*n; j++){
+				if(i+n == j){
+					tmp[i][j] = 1;
+				}
+				else{
+					tmp[i][j] = 0;
+				}
+			}
+		}
+		gaussJordan(tmp, n, 2*n);
+		for(int i=0; i<n; i++){
+			for(int j=0; j<n; j++){
+				ans[i][j] = tmp[i][j+n];
+			}
+		}
+	}
 	
 	/* INTERPOLASI DAN REGRESI */
 	
