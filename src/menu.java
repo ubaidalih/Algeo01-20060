@@ -204,8 +204,8 @@ public class menu {
 				}
 			} else if (menuUtama == 2) {
 				System.out.println("SUBMENU");
-				System.out.println("1. Metode Reduksi Baris");
-				System.out.println("2. Metode Ekspansi Kofaktor");
+				System.out.println("1. Metode Ekspansi Kofaktor");
+				System.out.println("2. Metode Reduksi Baris");
 				System.out.print("Masukkan metode pilihan : ");
 				int subMenu = scanner.nextInt();
 				if(subMenu == 1){
@@ -215,23 +215,62 @@ public class menu {
 					System.out.print("Masukkan metode pilihan : ");
 					int menuInput = scanner.nextInt();
 					if(menuInput == 1){
+						int n = scanner.nextInt();
+						double mat[][] = new double[n][n];
+						algeo.readMatriks(mat, n, n);
+						System.out.println("OUTPUT");
+						System.out.println("1. Output melalui screen");
+						System.out.println("2. Output melalui file");
+						System.out.print("Masukkan metode pilihan : ");
+						int menuOutput = scanner.nextInt();
+						if(menuOutput == 1){
+							System.out.print("Determinan = ");
+							System.out.format("%.6f", algeo.determinanKofaktor(mat,n));
+							System.out.println();
+						}
+						else if(menuOutput == 2){
+							try{
+								FileWriter writer = new FileWriter("determinan.txt");
+								writer.write("Determinan = ");
+								String s = String.format("%.6f", algeo.determinanKofaktor(mat,n));
+								writer.write(s);
+								writer.close();
+							}
+							catch (IOException e) {
+								System.out.println("Gagal menyimpan ke dalam file.");
+								e.printStackTrace();
+							}
+						}
 
 					}
 					else if(menuInput == 2){
-						
+						double mat[][] = algeo.inputFile("1a.txt");
+						int n = mat.length;
+						System.out.println("OUTPUT");
+						System.out.println("1. Output melalui screen");
+						System.out.println("2. Output melalui file");
+						System.out.print("Masukkan metode pilihan : ");
+						int menuOutput = scanner.nextInt();
+						if(menuOutput == 1){
+							System.out.print("Determinan = ");
+							System.out.format("%.6f", algeo.determinanKofaktor(mat,n));
+							System.out.println();
+						}
+						else if(menuOutput == 2){
+							try{
+								FileWriter writer = new FileWriter("determinan.txt");
+								writer.write("Determinan = ");
+								String s = String.format("%.6f", algeo.determinanKofaktor(mat,n));
+								writer.write(s);
+								writer.close();
+							}
+							catch (IOException e) {
+								System.out.println("Gagal menyimpan ke dalam file.");
+								e.printStackTrace();
+							}
+						}
 					}
-					//ALGORITMA
-					System.out.println("OUTPUT");
-					System.out.println("1. Output melalui screen");
-					System.out.println("2. Output melalui file");
-					System.out.print("Masukkan metode pilihan : ");
-					menuInput = scanner.nextInt();
-					if(menuInput == 1){
-
-					}
-					else if(menuInput == 2){
-						
-					}
+					
 				}
 				else if(subMenu == 2){
 					System.out.println("INPUT");
@@ -240,22 +279,60 @@ public class menu {
 					System.out.print("Masukkan metode pilihan : ");
 					int menuInput = scanner.nextInt();
 					if(menuInput == 1){
+						int n = scanner.nextInt();
+						double mat[][] = new double[n][n];
+						algeo.readMatriks(mat, n, n);
+						System.out.println("OUTPUT");
+						System.out.println("1. Output melalui screen");
+						System.out.println("2. Output melalui file");
+						System.out.print("Masukkan metode pilihan : ");
+						int menuOutput = scanner.nextInt();
+						if(menuOutput == 1){
+							System.out.print("Determinan = ");
+							System.out.format("%.6f", algeo.determinanOBE(mat,n));
+							System.out.println();
+						}
+						else if(menuOutput == 2){
+							try{
+								FileWriter writer = new FileWriter("determinan.txt");
+								writer.write("Determinan = ");
+								String s = String.format("%.6f", algeo.determinanOBE(mat,n));
+								writer.write(s);
+								writer.close();
+							}
+							catch (IOException e) {
+								System.out.println("Gagal menyimpan ke dalam file.");
+								e.printStackTrace();
+							}
+						}
 
 					}
 					else if(menuInput == 2){
-						
-					}
-					//ALGORITMA
-					System.out.println("OUTPUT");
-					System.out.println("1. Output melalui screen");
-					System.out.println("2. Output melalui file");
-					System.out.print("Masukkan metode pilihan : ");
-					menuInput = scanner.nextInt();
-					if(menuInput == 1){
-
-					}
-					else if(menuInput == 2){
-						
+						double mat[][] = algeo.inputFile("1a.txt");
+						int n = mat.length;
+						System.out.println("OUTPUT");
+						System.out.println("1. Output melalui screen");
+						System.out.println("2. Output melalui file");
+						System.out.print("Masukkan metode pilihan : ");
+						int menuOutput = scanner.nextInt();
+						if(menuOutput == 1){
+							System.out.print("Determinan = ");
+							System.out.format("%.6f", algeo.determinanOBE(mat,n));
+							System.out.println();
+						}
+						else if(menuOutput == 2){
+							try{
+								FileWriter writer = new FileWriter("determinan.txt");
+								writer.write("Determinan = ");
+								String s = String.format("%.6f", algeo.determinanOBE(mat,n));
+								writer.write(s);
+								writer.close();
+							}
+							catch (IOException e) {
+								System.out.println("Gagal menyimpan ke dalam file.");
+								e.printStackTrace();
+							}
+						}
 					}
 				}
 			} else if (menuUtama == 3) {
