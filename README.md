@@ -9,3 +9,17 @@ Anggota :
 13520085 - Ubaidillah Ariq Prathama
 
 13520132 - Januar Budi Ghifari
+
+Cara Menjalankan
+
+1. Masuk ke folder src
+2. Buka command prompt pada folder tersebut
+3. Compile kedua file ke folder bin dengan cara :
+javac -d ../bin ./algeo.java
+javac -d ../bin ./menu.java
+4. Buka folder bin dan buka command prompt di folder tersebut
+5. Jalankan dengan cara :
+java pack.menu
+6. Program juga dapat langsung dicompile di folder src dengan cara :
+javac -d . algeo.java
+javac -d . menu.java
