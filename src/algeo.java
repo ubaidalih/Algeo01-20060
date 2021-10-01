@@ -422,13 +422,13 @@ public class algeo {
     							if (mat[i][k] == 0) {
     								continue;
     							} else if (mat[i][k] == 1) {
-    								yangVar = yangVar + " - " + ans[k];
+    								yangVar = yangVar + " - " + "(" + ans[k] +")";
     							} else if (mat[i][k] == -1) {
-    								yangVar = yangVar + " + " + ans[k];
+    								yangVar = yangVar + " + " + "(" +ans[k]+")";
     							} else if (mat[i][k] < 0){
-    								yangVar = yangVar + " " + String.format("%f", mat[i][k]) + ans[k];
+    								yangVar = yangVar + " " + String.format("%f", mat[i][k]) + "(" +ans[k]+")";
     							} else {
-    								yangVar = yangVar + " - " +String.format("%f", mat[i][k]) + ans[k];
+    								yangVar = yangVar + " - " +String.format("%f", mat[i][k]) + "(" +ans[k]+")";
     							}
     						}
     					}
@@ -444,6 +444,11 @@ public class algeo {
     				}
     			}
     		}
+    		for (int i = 0; i < col-1; i++) {
+    			if (ans[i]=="tai") {
+    				ans[i] = listVar[cnt];
+    			}
+        	}
         }
     }
     
