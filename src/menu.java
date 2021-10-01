@@ -285,12 +285,12 @@ public class menu {
 					int n;
 					n = scanner.nextInt();
 					double mat[][] = new double[n+1][2];
-					//algeo.readMatriks(mat,row,col);
-					for(int i=0; i<n+1; i++){
+					algeo.readMatriks(mat,n+1,2);
+					/*for(int i=0; i<n+1; i++){
 						for(int j=0; j<2; j++){
 							mat[i][j] = scanner.nextDouble();
 						}
-					}
+					}*/
 					double ans[] = new double[n+1];
 					algeo.interpolasi(mat,ans,n);
 
@@ -307,7 +307,7 @@ public class menu {
 					}
 				}
 				else if(menuInput == 2){
-					/*double mat[][] = algeo.inputFile("1a.txt");
+					double mat[][] = algeo.inputFile("6a.txt");
 					int n = mat.length - 1;
 					double ans[] = new double[n+1];
 					algeo.interpolasi(mat,ans,n);
@@ -322,7 +322,7 @@ public class menu {
 					}
 					else if(menuOutput == 2){
 						algeo.saveFileInterpolasi(ans, n);
-					}*/
+					}
 				}
 				
 			} else if (menuUtama == 5) {
@@ -358,7 +358,7 @@ public class menu {
 					}
 				}
 				else if(menuInput == 2){
-					/*double mat[][] = algeo.inputFile("1a.txt");
+					double mat[][] = algeo.inputFile("7.txt");
 					int row = mat.length;
 					int col = mat[0].length;
 					double ans[] = new double[col];
@@ -374,7 +374,7 @@ public class menu {
 					}
 					else if(menuOutput == 2){
 						algeo.saveFileRegresi(ans, col-1);
-					}*/
+					}
 				}
 				
 			} else if (menuUtama == 6) {

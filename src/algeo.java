@@ -352,7 +352,6 @@ public class algeo {
             while((j < col) && (mat[i][j]==(double)0)){
                 j++;
             }
-            System.out.print(barisnol);
             if(j == (col-1)){
                 solvable = false;
             }else if(j == (col)){
