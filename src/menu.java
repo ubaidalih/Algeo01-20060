@@ -373,20 +373,29 @@ public class menu {
 						}
 					}
 					else if(menuInput == 2){
-						
+						double mat[][] = algeo.inputFile("1a.txt");
+						int row = mat.length;
+						double ans[][] = new double[row][row];
+						boolean solvable = true;
+						double cekDet = algeo.determinanKofaktor(mat, row);
+						if (cekDet == 0){
+							solvable = false;
+						} else{
+							algeo.matriksInvers(mat, ans, row);
+						}
+						System.out.println("OUTPUT");
+						System.out.println("1. Output melalui screen");
+						System.out.println("2. Output melalui file");
+						System.out.print("Masukkan metode pilihan : ");
+						int menuOutput = scanner.nextInt();
+						if(menuOutput == 1){
+							algeo.displayInvers(ans, solvable, row);
+						}
+						else if(menuOutput == 2){
+							algeo.saveFileInvers(ans, solvable, row);
+						}
 					}
-					//ALGORITMA
-					System.out.println("OUTPUT");
-					System.out.println("1. Output melalui screen");
-					System.out.println("2. Output melalui file");
-					System.out.print("Masukkan metode pilihan : ");
-					menuInput = scanner.nextInt();
-					if(menuInput == 1){
-
-					}
-					else if(menuInput == 2){
-						
-					}
+					
 				}
 				else if(subMenu == 2){
 					System.out.println("INPUT");
@@ -395,22 +404,52 @@ public class menu {
 					System.out.print("Masukkan metode pilihan : ");
 					int menuInput = scanner.nextInt();
 					if(menuInput == 1){
-
+						int row;
+						row = scanner.nextInt();
+						double mat[][] = new double[row][row];
+						algeo.readMatriks(mat, row, row);
+						double ans[][] = new double[row][row];
+						boolean solvable = true;
+						double cekDet = algeo.determinanKofaktor(mat, row);
+						if (cekDet == 0){
+							solvable = false;
+						} else{
+							algeo.matriksInversJordan(mat, ans, row);
+						}
+						System.out.println("OUTPUT");
+						System.out.println("1. Output melalui screen");
+						System.out.println("2. Output melalui file");
+						System.out.print("Masukkan metode pilihan : ");
+						int menuOutput = scanner.nextInt();
+						if(menuOutput == 1){
+							algeo.displayInvers(ans, solvable, row);
+						}
+						else if(menuOutput == 2){
+							algeo.saveFileInvers(ans, solvable, row);
+						}
 					}
 					else if(menuInput == 2){
-						
-					}
-					//ALGORITMA
-					System.out.println("OUTPUT");
-					System.out.println("1. Output melalui screen");
-					System.out.println("2. Output melalui file");
-					System.out.print("Masukkan metode pilihan : ");
-					menuInput = scanner.nextInt();
-					if(menuInput == 1){
-
-					}
-					else if(menuInput == 2){
-						
+						double mat[][] = algeo.inputFile("1a.txt");
+						int row = mat.length;
+						double ans[][] = new double[row][row];
+						boolean solvable = true;
+						double cekDet = algeo.determinanKofaktor(mat, row);
+						if (cekDet == 0){
+							solvable = false;
+						} else{
+							algeo.matriksInversJordan(mat, ans, row);
+						}
+						System.out.println("OUTPUT");
+						System.out.println("1. Output melalui screen");
+						System.out.println("2. Output melalui file");
+						System.out.print("Masukkan metode pilihan : ");
+						int menuOutput = scanner.nextInt();
+						if(menuOutput == 1){
+							algeo.displayInvers(ans, solvable, row);
+						}
+						else if(menuOutput == 2){
+							algeo.saveFileInvers(ans, solvable, row);
+						}
 					}
 				}
 			} else if (menuUtama == 4) {
@@ -424,11 +463,6 @@ public class menu {
 					n = scanner.nextInt();
 					double mat[][] = new double[n+1][2];
 					algeo.readMatriks(mat,n+1,2);
-					/*for(int i=0; i<n+1; i++){
-						for(int j=0; j<2; j++){
-							mat[i][j] = scanner.nextDouble();
-						}
-					}*/
 					double ans[] = new double[n+1];
 					algeo.interpolasi(mat,ans,n);
 
@@ -474,12 +508,7 @@ public class menu {
 					row = scanner.nextInt();
 					col = scanner.nextInt();
 					double mat[][] = new double[row][col];
-					//algeo.readMatriks(mat,row,col);
-					for(int i=0; i<row; i++){
-						for(int j=0; j<col; j++){
-							mat[i][j] = scanner.nextDouble();
-						}
-					}
+					algeo.readMatriks(mat,row,col);
 					double ans[] = new double[col];
 					algeo.regresi(mat,ans, row, col-1);
 
