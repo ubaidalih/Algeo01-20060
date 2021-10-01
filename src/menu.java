@@ -164,6 +164,7 @@ public class menu {
 						
 					}
 				}
+
 				else if(subMenu == 4){
 					System.out.println("INPUT");
 					System.out.println("1. Input melalui keyboard");
@@ -374,7 +375,6 @@ public class menu {
 					}
 					else if(menuInput == 2){
 						
-					}
 					//ALGORITMA
 					System.out.println("OUTPUT");
 					System.out.println("1. Output melalui screen");
@@ -387,6 +387,7 @@ public class menu {
 					else if(menuInput == 2){
 						
 					}
+					}
 				}
 				else if(subMenu == 2){
 					System.out.println("INPUT");
@@ -395,7 +396,50 @@ public class menu {
 					System.out.print("Masukkan metode pilihan : ");
 					int menuInput = scanner.nextInt();
 					if(menuInput == 1){
-
+						int row;
+						row = scanner.nextInt();
+						double mat[][] = new double[row][row*2];
+						for(int i=0; i < row; i++){
+							for(int j=0; j < row; j++){
+								mat[i][j] = scanner.nextDouble();
+							}
+						}
+						for(int i = 0; i < row; i++){
+							for(int j = 0; j < row; j++ ){
+								if(i==j){
+									mat[i][j+row]= 1;
+								}
+								else{
+									mat[i][j+row]=0;
+								}
+							}
+						}
+						// double ans[][] = new double[row][row];
+						// double red[][] = new double[row][row*2];
+						boolean solvable = true;
+						double cekDet = algeo.determinanKofaktor(mat, row);
+						if (cekDet == 0){
+							solvable = false;
+						} else{
+							algeo.gaussJordan(mat, row, row*2);
+						}
+						System.out.println("OUTPUT");
+						System.out.println("1. Output melalui screen");
+						System.out.println("2. Output melalui file");
+						System.out.print("Masukkan metode pilihan : ");
+						int menuOutput = scanner.nextInt();
+						if(menuOutput == 1){
+							for(int i=0; i<row; i++){
+								for(int j=3; j<row*2; j++){
+									System.out.print(mat[i][j]);
+									System.out.print(" ");
+								}
+								System.out.println();
+							}
+						}
+						else if(menuOutput == 2){
+							// algeo.saveFileInvers(mat, solvable, row);
+						}
 					}
 					else if(menuInput == 2){
 						
