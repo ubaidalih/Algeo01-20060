@@ -538,44 +538,50 @@ public class algeo {
                 mat[i][j] = in.nextDouble();
             }
         }
-        in.close();
     }
 
-    public static double[][] inputFile(String fileName)throws Exception{        
-        //File file = new File(new File("../test/"+fileName).getCanonicalPath());
-        File file = new File(new File(fileName).getCanonicalPath());
-        Scanner scanner = new Scanner(file);
+    public static double[][] inputFile(String fileName){
+        double temp[][] = new double[1][1];        
+        try{
+            //File file = new File(new File("../test/"+fileName).getCanonicalPath());
+            File file = new File(new File(fileName).getCanonicalPath());
+            Scanner scanner = new Scanner(file);
 
-        int col = 0;
-        int row = 0;
-        while(scanner.hasNextLine()){
-            if(row == 0){
-                col = (scanner.nextLine().trim().split(" ")).length;
+            int col = 0;
+            int row = 0;
+            while(scanner.hasNextLine()){
+                if(row == 0){
+                    col = (scanner.nextLine().trim().split(" ")).length;
+                }
+                else scanner.nextLine();
+                row++;
             }
-            else scanner.nextLine();
-            row++;
-        }
-        scanner.close();
 
-        Scanner scanner2 = new Scanner(file);
-        double mat[][] = new double[row][col];
-        for (int i = 0; i < row; i++){
-            for (int j = 0; j <col; j++){
-                mat[i][j] = scanner2.nextDouble();
+            Scanner scanner2 = new Scanner(file);
+            double mat[][] = new double[row][col];
+            for (int i = 0; i < row; i++){
+                for (int j = 0; j <col; j++){
+                    mat[i][j] = scanner2.nextDouble();
+                }
             }
+            temp = mat;
+            //return mat;
         }
-        scanner2.close();
-        
-        return mat;
+        catch (FileNotFoundException ex){
+            System.out.println("File tidak ditemukan.");
+        } 
+        catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return temp;
     }
 
 
-    public static void displaySPL(double ans[],boolean solvable, int col){
-        if(solvable){
+    public static void displaySPL(String ans[],boolean solvable, int col){
+        if(ans[0] != "tai"){
             System.out.println("Solusi sistem persamaan : ");
             for (int i = 0; i < col; i++){
-                System.out.print("x_"+ (i+1) + " = ");
-                System.out.format("%.6f", ans[i]);
+                System.out.print("x_"+ (i+1) + " = " +ans[i]);
                 System.out.println();
             }
         }
@@ -584,15 +590,13 @@ public class algeo {
         }
     }
 
-    public static void saveFileSPL(double ans[], boolean solvable, int col){
-        if(solvable){
+    public static void saveFileSPL(String ans[], boolean solvable, int col){
+        if(ans[0] != "tai"){
             try{
                 FileWriter writer = new FileWriter("spl.txt");
                 writer.write("Solusi sistem persamaan : \n");
                 for (int i = 0; i < col; i++){
-                    writer.write("x_"+ (i+1) + " = ");
-                    String s = String.format("%.6f", ans[i]);
-                    writer.write(s);
+                    writer.write("x_"+ (i+1) + " = "+ ans[i]);
                     writer.write("\n");
                 }
                 writer.close();
@@ -695,7 +699,6 @@ public class algeo {
             System.out.format("%.6f", taksiran);
             System.out.println();
         }
-        scanner.close();
     }
     
     public static void saveFileInterpolasi(double ans[], int n){
@@ -735,7 +738,6 @@ public class algeo {
                 writer.write(s);
                 writer.write("\n");
             }
-            scanner.close();
             writer.close();
             System.out.println("File berhasil disimpan.");
         } 
@@ -775,7 +777,6 @@ public class algeo {
             System.out.format("%.6f", taksiran);
             System.out.println();
         }
-        scanner.close();
     }
 
     public static void saveFileRegresi(double ans[], int k){
@@ -812,7 +813,6 @@ public class algeo {
                 writer.write(s);
                 writer.write("\n");
             }
-            scanner.close();
             writer.close();
             System.out.println("File berhasil disimpan.");
         } 
