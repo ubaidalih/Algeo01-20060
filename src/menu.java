@@ -124,11 +124,8 @@ public class menu {
 					}
 					else if(menuInput == 2){
 <<<<<<< HEAD
-<<<<<<< HEAD
 						
 =======
-=======
->>>>>>> parent of cfdd631 (input string buat file tapi ngebug)
 						double[][] mat = algeo.inputFile("1a.txt");
 						int row = mat.length;
 						int col = mat[0].length;
@@ -187,10 +184,7 @@ public class menu {
 					}
 					else if(menuInput == 2){
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> parent of cfdd631 (input string buat file tapi ngebug)
 						double[][] mat = algeo.inputFile("1a.txt");
 						int n = mat.length;
 						boolean solvable = true;
@@ -239,10 +233,7 @@ public class menu {
 					}
 					else if(menuInput == 2){
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> parent of cfdd631 (input string buat file tapi ngebug)
 						double[][] mat = algeo.inputFile("1a.txt");
 						int n = mat.length;
 						boolean solvable = true;
@@ -426,7 +417,6 @@ public class menu {
 					}
 					else if(menuInput == 2){
 <<<<<<< HEAD
-<<<<<<< HEAD
 						
 					//ALGORITMA
 					System.out.println("OUTPUT");
@@ -441,8 +431,6 @@ public class menu {
 						
 					}
 =======
-=======
->>>>>>> parent of cfdd631 (input string buat file tapi ngebug)
 						double mat[][] = algeo.inputFile("1a.txt");
 						int row = mat.length;
 						double ans[][] = new double[row][row];
