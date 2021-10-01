@@ -123,7 +123,29 @@ public class menu {
 						}
 					}
 					else if(menuInput == 2){
+<<<<<<< HEAD
 						
+=======
+						double[][] mat = algeo.inputFile("1a.txt");
+						int row = mat.length;
+						int col = mat[0].length;
+						algeo.gaussJordan(mat, row, col);
+						boolean solvable = true;
+						String temp[] = new String[col-1];
+						algeo.solusiSPL(mat,row,col,solvable,temp);
+
+						System.out.println("OUTPUT");
+						System.out.println("1. Output melalui screen");
+						System.out.println("2. Output melalui file");
+						System.out.print("Masukkan metode pilihan : ");
+						menuInput = scanner.nextInt();
+						if(menuInput == 1){
+							algeo.displaySPL(temp,solvable, col-1);
+						}
+						else if(menuInput == 2){
+							algeo.saveFileSPL(temp,solvable, col-1);
+						}
+>>>>>>> parent of cfdd631 (input string buat file tapi ngebug)
 					}
 				}
 				else if(subMenu == 3){
@@ -161,6 +183,16 @@ public class menu {
 						}
 					}
 					else if(menuInput == 2){
+<<<<<<< HEAD
+=======
+						double[][] mat = algeo.inputFile("1a.txt");
+						int n = mat.length;
+						boolean solvable = true;
+						double ans[] = new double[n];
+						String ansNew[] = new String[n];
+						algeo.invers(mat, ans, solvable, n);
+						algeo.doubleToString(ans, ansNew);
+>>>>>>> parent of cfdd631 (input string buat file tapi ngebug)
 						
 					}
 				}
@@ -200,6 +232,16 @@ public class menu {
 						}
 					}
 					else if(menuInput == 2){
+<<<<<<< HEAD
+=======
+						double[][] mat = algeo.inputFile("1a.txt");
+						int n = mat.length;
+						boolean solvable = true;
+						double ans[] = new double[n];
+						algeo.cramer(mat, ans, solvable, n);
+						String ansNew[] = new String[n];;
+						algeo.doubleToString(ans, ansNew);
+>>>>>>> parent of cfdd631 (input string buat file tapi ngebug)
 						
 					}
 				}
@@ -374,6 +416,7 @@ public class menu {
 						}
 					}
 					else if(menuInput == 2){
+<<<<<<< HEAD
 						
 					//ALGORITMA
 					System.out.println("OUTPUT");
@@ -387,6 +430,29 @@ public class menu {
 					else if(menuInput == 2){
 						
 					}
+=======
+						double mat[][] = algeo.inputFile("1a.txt");
+						int row = mat.length;
+						double ans[][] = new double[row][row];
+						boolean solvable = true;
+						double cekDet = algeo.determinanKofaktor(mat, row);
+						if (cekDet == 0){
+							solvable = false;
+						} else{
+							algeo.matriksInvers(mat, ans, row);
+						}
+						System.out.println("OUTPUT");
+						System.out.println("1. Output melalui screen");
+						System.out.println("2. Output melalui file");
+						System.out.print("Masukkan metode pilihan : ");
+						int menuOutput = scanner.nextInt();
+						if(menuOutput == 1){
+							algeo.displayInvers(ans, solvable, row);
+						}
+						else if(menuOutput == 2){
+							algeo.saveFileInvers(ans, solvable, row);
+						}
+>>>>>>> parent of cfdd631 (input string buat file tapi ngebug)
 					}
 				}
 				else if(subMenu == 2){
@@ -414,8 +480,16 @@ public class menu {
 								}
 							}
 						}
+<<<<<<< HEAD
 						// double ans[][] = new double[row][row];
 						// double red[][] = new double[row][row*2];
+=======
+					}
+					else if(menuInput == 2){
+						double mat[][] = algeo.inputFile("1a.txt");
+						int row = mat.length;
+						double ans[][] = new double[row][row];
+>>>>>>> parent of cfdd631 (input string buat file tapi ngebug)
 						boolean solvable = true;
 						double cekDet = algeo.determinanKofaktor(mat, row);
 						if (cekDet == 0){
